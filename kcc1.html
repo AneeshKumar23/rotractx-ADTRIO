@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PM Kisan Credit Card (KCC)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2, h3 {
+      color: #4CAF50;
+    }
+    ul {
+      line-height: 1.6;
+    }
+    .language-selector {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .language-selector button {
+      padding: 10px 15px;
+      margin: 0 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid #4CAF50;
+      background-color: white;
+      color: #4CAF50;
+      border-radius: 5px;
+    }
+    .language-selector button:hover {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .apply-button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    .apply-button button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .apply-button button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="title">PM Kisan Credit Card (KCC)</h1>
+  </header>
+
+  <div class="container">
+    <div class="language-selector">
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('hi')">हिंदी</button>
+        <button onclick="changeLanguage('ta')">தமிழ்</button>
+      </div>
+    <h2 id="about">About the Scheme</h2>
+    <p id="description">
+      The Kisan Credit Card (KCC) scheme was introduced in 1998 by NABARD to provide farmers with timely access to credit. It offers farmers credit for crops, post-harvest expenses, working capital for farm assets and allied activities, as well as consumption needs. The card helps reduce dependence on informal credit and provides access to institutional credit at subsidized interest rates.
+    </p>
+
+    <h3 id="features">Features</h3>
+    <ul id="features-list">
+      <li>Short-term credit support for crops and term loans for agriculture and allied activities.</li>
+      <li>Credit limit based on operational land holding, cropping pattern, and scale of finance.</li>
+      <li>Interest subvention and prompt repayment incentives available.</li>
+    </ul>
+
+    <h3 id="interest">Interest Rates and Loan Details</h3>
+    <ul id="interest-list">
+      <li>Base interest rate: ~7% per annum (subject to bank policy)</li>
+      <li>Interest subvention of 2% by the Government of India</li>
+      <li>Additional 3% incentive on timely repayment — effective interest rate can be as low as 4%</li>
+      <li>Loan limit: up to ₹3 lakhs (can vary by bank)</li>
+      <li>Repayment period: typically 12 months, extendable for term loans</li>
+    </ul>
+
+    <h3 id="eligibility">Eligibility</h3>
+    <ul id="eligibility-list">
+      <li>All farmers: individuals/joint borrowers who are owner-cultivators.</li>
+      <li>Tenant farmers, oral lessees, and sharecroppers.</li>
+      <li>Self Help Groups (SHGs) or Joint Liability Groups (JLGs) of farmers.</li>
+    </ul>
+
+    <h3 id="documents">Documents Required</h3>
+    <ul id="documents-list">
+      <li>Application form</li>
+      <li>Land documents</li>
+      <li>KYC documents: Aadhaar card, PAN card, Voter ID, etc.</li>
+      <li>Passport-size photographs</li>
+    </ul>
+
+    <h3 id="benefits">Benefits</h3>
+    <ul id="benefits-list">
+      <li>Easy access to credit</li>
+      <li>Lower interest rates with subsidy</li>
+      <li>Flexible repayment options</li>
+      <li>Coverage for allied and non-farming activities</li>
+    </ul>
+    <img src="kccamo.png" alt="Flowers in Chania" width="900px">
+    
+    <div class="apply-button">
+      <a href="https://pmkisan.gov.in" target="_blank">
+        <button>Apply Now</button>
+      </a>
+    </div>
+  </div>
+
+
+  <script>
+    const translations = {
+      en: {
+        title: "PM Kisan Credit Card (KCC)",
+        about: "About the Scheme",
+        description: "The Kisan Credit Card (KCC) scheme was introduced in 1998 by NABARD to provide farmers with timely access to credit. It offers farmers credit for crops, post-harvest expenses, working capital for farm assets and allied activities, as well as consumption needs. The card helps reduce dependence on informal credit and provides access to institutional credit at subsidized interest rates.",
+        features: "Features",
+        featuresList: [
+          "Short-term credit support for crops and term loans for agriculture and allied activities.",
+          "Credit limit based on operational land holding, cropping pattern, and scale of finance.",
+          "Interest subvention and prompt repayment incentives available."
+        ],
+        interest: "Interest Rates and Loan Details",
+        interestList: [
+          "Base interest rate: ~7% per annum (subject to bank policy)",
+          "Interest subvention of 2% by the Government of India",
+          "Additional 3% incentive on timely repayment — effective interest rate can be as low as 4%",
+          "Loan limit: up to ₹3 lakhs (can vary by bank)",
+          "Repayment period: typically 12 months, extendable for term loans"
+        ],
+        eligibility: "Eligibility",
+        eligibilityList: [
+          "All farmers: individuals/joint borrowers who are owner-cultivators.",
+          "Tenant farmers, oral lessees, and sharecroppers.",
+          "Self Help Groups (SHGs) or Joint Liability Groups (JLGs) of farmers."
+        ],
+        documents: "Documents Required",
+        documentsList: [
+          "Application form",
+          "Land documents",
+          "KYC documents: Aadhaar card, PAN card, Voter ID, etc.",
+          "Passport-size photographs"
+        ],
+        benefits: "Benefits",
+        benefitsList: [
+          "Easy access to credit",
+          "Lower interest rates with subsidy",
+          "Flexible repayment options",
+          "Coverage for allied and non-farming activities"
+        ]
+      },
+      hi: {
+        title: "प्रधानमंत्री किसान क्रेडिट कार्ड (केसीसी)",
+        about: "योजना के बारे में",
+        description: "किसान क्रेडिट कार्ड (केसीसी) योजना 1998 में नाबार्ड द्वारा किसानों को समय पर ऋण प्रदान करने के लिए शुरू की गई थी। यह फसलों, कटाई के बाद के खर्चों, कृषि उपकरणों के लिए कार्यशील पूंजी और संबद्ध गतिविधियों के लिए ऋण प्रदान करता है। यह योजना किसानों को सस्ती ब्याज दरों पर संस्थागत ऋण तक पहुँच प्रदान करती है।",
+        features: "विशेषताएँ",
+        featuresList: [
+          "फसलों और संबद्ध गतिविधियों के लिए अल्पकालिक ऋण और टर्म लोन।",
+          "भूमि धारण, फसल पैटर्न और वित्त की मात्रा के आधार पर ऋण सीमा।",
+          "ब्याज सब्सिडी और समय पर पुनर्भुगतान पर प्रोत्साहन।"
+        ],
+        interest: "ब्याज दरें और ऋण विवरण",
+        interestList: [
+          "बेस ब्याज दर: लगभग 7% प्रति वर्ष (बैंक नीति के अनुसार)",
+          "भारत सरकार द्वारा 2% ब्याज सब्सिडी",
+          "समय पर भुगतान पर अतिरिक्त 3% प्रोत्साहन — प्रभावी ब्याज दर 4% तक कम हो सकती है",
+          "ऋण सीमा: ₹3 लाख तक (बैंक पर निर्भर)",
+          "पुनर्भुगतान अवधि: सामान्यतः 12 महीने, टर्म लोन के लिए बढ़ाई जा सकती है"
+        ],
+        eligibility: "पात्रता",
+        eligibilityList: [
+          "सभी किसान: व्यक्तिगत/संयुक्त उधारकर्ता जो भूमिधारी हैं।",
+          "किरायेदार किसान, मौखिक पट्टेदार और बटाईदार।",
+          "स्व-सहायता समूह (SHGs) या संयुक्त देयता समूह (JLGs)।"
+        ],
+        documents: "आवश्यक दस्तावेज़",
+        documentsList: [
+          "आवेदन पत्र",
+          "भूमि संबंधी दस्तावेज़",
+          "KYC दस्तावेज़: आधार कार्ड, पैन कार्ड, मतदाता ID आदि",
+          "पासपोर्ट साइज फोटो"
+        ],
+        benefits: "लाभ",
+        benefitsList: [
+          "आसान ऋण सुविधा",
+          "सब्सिडी के साथ कम ब्याज दरें",
+          "लचीले पुनर्भुगतान विकल्प",
+          "गैर-कृषि गतिविधियों के लिए भी कवरेज"
+        ]
+      },
+      ta: {
+        title: "பிரதமர் விவசாயக் கடன் அட்டை (KCC)",
+        about: "திட்டத்தைப் பற்றி",
+        description: "விவசாயக் கடன் அட்டை (KCC) திட்டம் 1998 ஆம் ஆண்டு NABARD மூலம் விவசாயிகளுக்கு காலதாமதமில்லாமல் கடன் வழங்க உருவாக்கப்பட்டது. இது பயிர்கள், அறுவடைக்குப் பிந்தைய செலவுகள், விவசாய உபகரணங்களுக்கான வேலைநிறைவு நிதி மற்றும் இணைப்பான செயல்பாடுகளுக்கான கடன்களை வழங்குகிறது.",
+        features: "அம்சங்கள்",
+        featuresList: [
+          "விவசாயம் மற்றும் தொடர்புடைய நடவடிக்கைகளுக்கான குறுகிய காலக் கடன் மற்றும் நீண்டகாலக் கடன்.",
+          "செயல்பாட்டு நில பரப்பளவு மற்றும் பயிர் மாதிரிக்கேற்ப கடன் வரம்பு.",
+          "வட்டி மானியம் மற்றும் நேரத்திற்குள் திருப்பி செலுத்தும் ஊக்கம் வழங்கப்படும்."
+        ],
+        interest: "வட்டி விகிதங்கள் மற்றும் கடன் விவரங்கள்",
+        interestList: [
+          "அடிப்படை வட்டி விகிதம்: ஆண்டுக்கு சுமார் 7% (வங்கி கொள்கைக்கு உட்பட்டது)",
+          "இந்திய அரசு மூலம் 2% வட்டி மானியம்",
+          "நேர்த்தியான திருப்பிச் செலுத்துதலுக்காக கூடுதல் 3% ஊக்கம் — வட்டி விகிதம் 4% வரை குறையக்கூடும்",
+          "கடன் வரம்பு: ₹3 லட்சம் வரை (வங்கியின் அடிப்படையில் மாறக்கூடும்)",
+          "திருப்பிச் செலுத்தும் காலம்: பொதுவாக 12 மாதங்கள், ஆனால் நிபந்தனை கடன்கள் நீட்டிக்கப்படலாம்"
+        ],
+        eligibility: "தகுதி",
+        eligibilityList: [
+          "அனைத்து விவசாயிகள்: தனிப்பட்ட/ஒற்றை கடனாளிகள் जो நில உரிமையாளர் ஆவார்கள்.",
+          "கிராமிய விவசாயிகள், வாய்மொழி வாடகையாளர்கள், பங்கீட்டாளர்கள்.",
+          "சுய உதவி குழுக்கள் (SHGs) அல்லது இணைக்கப்பட்ட பொறுப்பு குழுக்கள் (JLGs) சுமூகமாக செயற்படும்."
+        ],
+        documents: "தரப்படும் ஆவணங்கள்",
+        documentsList: [
+          "விண்ணப்பப் படிவம்",
+          "நில தொடர்பான ஆவணங்கள்",
+          "KYC ஆவணங்கள்: ஆதார் கார்டு, பான் கார்டு, வோட்டர் ஐடி மற்றும் பிற",
+          "பாஸ்போர்ட் சைஸ் புகைப்படங்கள்"
+        ],
+        benefits: "பயன்கள்",
+        benefitsList: [
+          "எளிதான கடன் அணுகல்",
+          "தனியார் வட்டி விகிதங்களுடன் கிழக்குவழி உதவி",
+          "வயிற்றில் திருப்புப்பதிவுக்கான நெகிழ்வான வழிகள்",
+          "நிறுவனங்களுக்குரிய விவசாய உரிமைகளை விளக்கும்போது"
+        ]
+      }
+    };
+
+    function changeLanguage(lang) {
+      document.getElementById("title").innerText = translations[lang].title;
+      document.getElementById("about").innerText = translations[lang].about;
+      document.getElementById("description").innerText = translations[lang].description;
+      document.getElementById("features").innerText = translations[lang].features;
+      const featuresList = document.getElementById("features-list");
+      featuresList.innerHTML = "";
+      translations[lang].featuresList.forEach(item => {
+        const li = document.createElement("li");
+        li.innerText = item;
+        featuresList.appendChild(li);
+      });
+
+      document.getElementById("interest").innerText = translations[lang].interest;
+      const interestList = document.getElementById("interest-list");
+      interestList.innerHTML = "";
+      translations[lang].interestList.forEach(item => {
+        const li = document.createElement("li");
+        li.innerText = item;
+        interestList.appendChild(li);
+      });
+
+      document.getElementById("eligibility").innerText = translations[lang].eligibility;
+      const eligibilityList = document.getElementById("eligibility-list");
+      eligibilityList.innerHTML = "";
+      translations[lang].eligibilityList.forEach(item => {
+        const li = document.createElement("li");
+        li.innerText = item;
+        eligibilityList.appendChild(li);
+      });
+
+      document.getElementById("documents").innerText = translations[lang].documents;
+      const documentsList = document.getElementById("documents-list");
+      documentsList.innerHTML = "";
+      translations[lang].documentsList.forEach(item => {
+        const li = document.createElement("li");
+        li.innerText = item;
+        documentsList.appendChild(li);
+      });
+
+      document.getElementById("benefits").innerText = translations[lang].benefits;
+      const benefitsList = document.getElementById("benefits-list");
+      benefitsList.innerHTML = "";
+      translations[lang].benefitsList.forEach(item => {
+        const li = document.createElement("li");
+        li.innerText = item;
+        benefitsList.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

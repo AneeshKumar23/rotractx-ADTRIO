@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Rental</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f2f4f7;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #2e7d32;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+      background-color: white;
+      max-width: 600px;
+      margin: 3rem auto;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+      color: #2e7d32;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #4caf50;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+
+    .btn {
+      background-color: #4caf50;
+      color: white;
+      padding: 0.9rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #388e3c;
+    }
+
+    @media (max-width: 500px) {
+      .form-container {
+        margin: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>Book This Product</header>
+
+  <div class="form-container">
+    <h2>Enter Your Booking Details</h2>
+    <form id="bookingForm">
+      <div class="form-group">
+        <label for="pickup">Pickup Date & Time</label>
+        <input type="datetime-local" id="pickup" name="pickup" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dropoff">Drop-off Date & Time</label>
+        <input type="datetime-local" id="dropoff" name="dropoff" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required placeholder="Enter 10-digit mobile number">
+      </div>
+
+      <div class="form-group">
+        <label for="aadhar">Aadhar Number</label>
+        <input type="text" id="aadhar" name="aadhar" pattern="[0-9]{12}" required placeholder="12-digit Aadhar number">
+      </div>
+
+      <div class="form-group">
+        <label for="address">Your Address</label>
+        <textarea id="address" name="address" rows="3" required placeholder="Enter your full address..."></textarea>
+      </div>
+
+      <button type="submit" class="btn">Confirm Booking</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("bookingForm");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const data = {
+        pickupDateTime: document.getElementById("pickup").value,
+        dropoffDateTime: document.getElementById("dropoff").value,
+        phoneNumber: document.getElementById("phone").value,
+        aadharNumber: document.getElementById("aadhar").value,
+        address: document.getElementById("address").value
+      };
+
+      try {
+        const res = await fetch("http://localhost:3020/api/Booking/store", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          alert("Booking confirmed successfully!");
+          form.reset();
+        } else {
+          alert("Failed to book. " + result.message);
+        }
+      } catch (err) {
+        alert("An error occurred: " + err.message);
+      }
+    });
+  </script>
+
+</body>
+</html>

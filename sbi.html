@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SBI Agri Loan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+      color: #f2f6f2;
+    }
+
+    ul {
+      line-height: 1.6;
+    }
+
+    .language-selector {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .language-selector button {
+      padding: 10px 15px;
+      margin: 0 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid #4CAF50;
+      background-color: white;
+      color: #4CAF50;
+      border-radius: 5px;
+    }
+
+    .language-selector button:hover {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .apply-button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .apply-button button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .apply-button button:hover {
+      background-color: #45a049;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      color: #4CAF50;
+    }
+
+    .feature-list, .interest-list, .eligibility-list, .documents-list, .benefits-list {
+      padding-left: 20px;
+      list-style-type: disc;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 id="title">SBI Agri Loan</h1>
+  </header>
+
+  <div class="container">
+    <!-- Language selection -->
+    <div class="language-selector">
+      <button onclick="setLanguage('en')">English</button>
+      <button onclick="setLanguage('hi')">हिंदी</button>
+      <button onclick="setLanguage('ta')">தமிழ்</button>
+    </div>
+
+    <div class="section">
+      <h2 id="about"></h2>
+      <p id="description"></p>
+    </div>
+
+    <div class="section">
+      <h2 id="features"></h2>
+      <ul id="featuresList" class="feature-list"></ul>
+    </div>
+
+    <div class="section">
+      <h2 id="interest"></h2>
+      <ul id="interestList" class="interest-list"></ul>
+    </div>
+
+    <div class="section">
+      <h2 id="eligibility"></h2>
+      <ul id="eligibilityList" class="eligibility-list"></ul>
+    </div>
+
+    <div class="section">
+      <h2 id="documents"></h2>
+      <ul id="documentsList" class="documents-list"></ul>
+    </div>
+
+    <div class="section">
+      <h2 id="benefits"></h2>
+      <ul id="benefitsList" class="benefits-list"></ul>
+    </div>
+    <img src="sbiamo.png" width="900px">
+
+    <div class="apply-button">
+      <a href="https://sbi.co.in/web/agri-rural/agriculture-banking" class="button-link" target="_blank">
+        <button>Apply Now</button>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const sbiTranslations = {
+      en: {
+        title: "SBI Agri Loan",
+        about: "About the Scheme",
+        description: "The State Bank of India (SBI) offers agricultural loans to farmers for a variety of purposes, including crop cultivation, farm machinery, irrigation, and rural development. The aim is to boost agricultural productivity and provide financial support to farmers in rural areas.",
+        features: "Features",
+        featuresList: [
+          "Loans for crop cultivation, machinery, irrigation, and more.",
+          "Flexible repayment terms and loan tenures.",
+          "Support for farmers and rural entrepreneurs.",
+          "Loan available for both individuals and farmer groups."
+        ],
+        interest: "Interest Rates and Loan Details",
+        interestList: [
+          "Interest rates vary based on the loan type and tenure.",
+          "Subsidized rates available for certain projects.",
+          "Repayment tenure up to 7 years for short-term loans.",
+          "Loans available for individuals, SHGs, and farmers' groups."
+        ],
+        eligibility: "Eligibility",
+        eligibilityList: [
+          "Farmers, including individual and group-based.",
+          "Farmer Producer Organizations (FPOs) and Self-Help Groups (SHGs).",
+          "Agricultural entrepreneurs and cooperatives."
+        ],
+        documents: "Documents Required",
+        documentsList: [
+          "Loan application form.",
+          "Land ownership proof or lease agreement.",
+          "Project report (for term loans).",
+          "KYC documents (Aadhaar, PAN, etc.).",
+          "Photographs."
+        ],
+        benefits: "Benefits",
+        benefitsList: [
+          "Financial support for agricultural development.",
+          "Competitive interest rates and long repayment terms.",
+          "Supports modernization and mechanization of farming.",
+          "Provides financial security to rural communities."
+        ]
+      },
+      hi: {
+        title: "एसबीआई कृषि ऋण",
+        about: "योजना के बारे में",
+        description: "भारतीय स्टेट बैंक (SBI) किसानों को फसल उगाने, कृषि यंत्रों, सिंचाई और ग्रामीण विकास के लिए ऋण प्रदान करता है। इसका उद्देश्य कृषि उत्पादकता को बढ़ावा देना और ग्रामीण क्षेत्रों में किसानों को वित्तीय सहायता प्रदान करना है।",
+        features: "विशेषताएँ",
+        featuresList: [
+          "फसल उगाने, यंत्र, सिंचाई और अन्य के लिए ऋण।",
+          "लचीले पुनर्भुगतान शर्तें और ऋण अवधि।",
+          "किसानों और ग्रामीण उद्यमियों के लिए समर्थन।",
+          "व्यक्तिगत और किसान समूहों के लिए उपलब्ध ऋण।"
+        ],
+        interest: "ब्याज दरें और ऋण विवरण",
+        interestList: [
+          "ब्याज दरें ऋण प्रकार और अवधि पर निर्भर करती हैं।",
+          "कुछ परियोजनाओं के लिए सब्सिडी दरें उपलब्ध हैं।",
+          "किसी भी ऋण के लिए अधिकतम 7 वर्ष का पुनर्भुगतान काल।",
+          "व्यक्तिगत, SHGs और किसान समूहों के लिए ऋण उपलब्ध।"
+        ],
+        eligibility: "पात्रता",
+        eligibilityList: [
+          "किसान, व्यक्तिगत और समूह आधारित।",
+          "किसान उत्पादक संगठन (FPOs) और स्व-सहायता समूह (SHGs)।",
+          "कृषि उद्यमी और सहकारी समितियाँ।"
+        ],
+        documents: "आवश्यक दस्तावेज़",
+        documentsList: [
+          "ऋण आवेदन पत्र।",
+          "भूमि स्वामित्व प्रमाण या पट्टा समझौता।",
+          "परियोजना रिपोर्ट (टर्म लोन के लिए)।",
+          "KYC दस्तावेज़ (आधार, पैन आदि)।",
+          "फोटो।"
+        ],
+        benefits: "लाभ",
+        benefitsList: [
+          "कृषि विकास के लिए वित्तीय सहायता।",
+          "प्रतिस्पर्धी ब्याज दरें और लंबी पुनर्भुगतान अवधि।",
+          "कृषि यंत्रीकरण और आधुनिकीकरण का समर्थन।",
+          "ग्रामीण समुदायों को वित्तीय सुरक्षा प्रदान करता है।"
+        ]
+      },
+      ta: {
+        title: "SBI விவசாயக் கடன்",
+        about: "திட்டத்தைப் பற்றி",
+        description: "இந்திய அரசு வங்கியான ஸ்டேட் வங்கி ஆஃப் இந்தியா (SBI) விவசாயிகளுக்கு பல்வேறு நோக்கங்களுக்கான கடன்களை வழங்குகிறது, அதில் பயிர் பயிரிடல், விவசாய இயந்திரங்கள், நீர்ப்பாசன வசதி மற்றும் கிராமப்புற வளர்ச்சி அடங்கும். இந்த திட்டம் விவசாயத் துறையின் வளர்ச்சிக்காக விவசாயிகளுக்கு நிதி உதவி வழங்குவதற்கான நோக்கத்துடன் உள்ளது.",
+        features: "அம்சங்கள்",
+        featuresList: [
+          "பயிர் பயிரிடல், இயந்திரங்கள், நீர்ப்பாசன மற்றும் மேலும் பலவற்றுக்கான கடன்கள்.",
+          "மறுபணம் பெறும் கால மற்றும் கடன் அளவுகளில் மாற்றங்கள்.",
+          "விவசாயிகள் மற்றும் கிராமத்து தொழில்முனைவோருக்கு ஆதரவு.",
+          "இருப்பினும் மற்றும் விவசாய குழுக்கள் ஆகியவை கடனை பெற முடியும்."
+        ],
+        interest: "வட்டி விகிதங்கள் மற்றும் கடன் விவரங்கள்",
+        interestList: [
+          "வட்டி விகிதங்கள் கடன் வகை மற்றும் கால அளவைப் பொறுத்து மாறுகின்றன.",
+          "சிறப்புத் திட்டங்களுக்கு உதவி வட்டி விகிதங்கள்.",
+          "பொதுவாக 7 ஆண்டுகள் வரை கடன் செலுத்தும் கால அளவு.",
+          "பயனாளிகள், SHGகள் மற்றும் விவசாய குழுக்கள் ஆகியவை கடனை பெற முடியும்."
+        ],
+        eligibility: "தகுதி",
+        eligibilityList: [
+          "விவசாயிகள் (தனிப்பட்ட அல்லது குழு அடிப்படையில்).",
+          "விவசாயி உற்பத்தியாளர் அமைப்புகள் (FPOs) மற்றும் சுய உதவி குழுக்கள் (SHGs).",
+          "கृषி தொழில்முனைவோர் மற்றும் கூட்டுறவு அமைப்புகள்."
+        ],
+        documents: "ஆவணங்கள்",
+        documentsList: [
+          "கடன் விண்ணப்பப் படிவம்.",
+          "நில உரிமை சான்று அல்லது வாடகை ஒப்பந்தம்.",
+          "திட்ட அறிக்கை (கால அவகாச கடன்களுக்கு).",
+          "KYC ஆவணங்கள் (ஆதார், பான் எனும்).",
+          "புகைப்படங்கள்."
+        ],
+        benefits: "பயன்கள்",
+        benefitsList: [
+          "விவசாயத் துறையின் வளர்ச்சிக்கான நிதி ஆதரவு.",
+          "போட்டி வட்டி விகிதங்களும் மற்றும் நீண்டகால பணம் திரும்ப பெறும் கால அளவும்.",
+          "விவசாய இயந்திரமயமாக்கலை மற்றும் நவீனமயமாக்கலையும் ஆதரிக்கும்.",
+          "கிராமப்புற சமூகங்களுக்கு நிதி பாதுகாப்பு வழங்குகிறது."
+        ]
+      }
+    };
+
+    function setLanguage(language) {
+      document.getElementById('title').textContent = sbiTranslations[language].title;
+      document.getElementById('about').textContent = sbiTranslations[language].about;
+      document.getElementById('description').textContent = sbiTranslations[language].description;
+      document.getElementById('features').textContent = sbiTranslations[language].features;
+      document.getElementById('featuresList').innerHTML = sbiTranslations[language].featuresList.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('interest').textContent = sbiTranslations[language].interest;
+      document.getElementById('interestList').innerHTML = sbiTranslations[language].interestList.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('eligibility').textContent = sbiTranslations[language].eligibility;
+      document.getElementById('eligibilityList').innerHTML = sbiTranslations[language].eligibilityList.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('documents').textContent = sbiTranslations[language].documents;
+      document.getElementById('documentsList').innerHTML = sbiTranslations[language].documentsList.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('benefits').textContent = sbiTranslations[language].benefits;
+      document.getElementById('benefitsList').innerHTML = sbiTranslations[language].benefitsList.map(item => `<li>${item}</li>`).join('');
+    }
+
+    setLanguage('en');
+  </script>
+
+</body>
+</html>

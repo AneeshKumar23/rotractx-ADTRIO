@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Summary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9fdfb;
+      padding: 40px 20px;
+    }
+
+    .summary-card {
+      max-width: 750px;
+      margin: auto;
+      background-color: #e8f5e9;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h4 {
+      color: #2e7d32;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #777;
+    }
+
+    .timeline {
+      list-style: none;
+      padding-left: 0;
+      position: relative;
+    }
+
+    .timeline li {
+      padding: 10px 20px;
+      border-left: 4px solid #ccc;
+      margin-left: 20px;
+      position: relative;
+    }
+
+    .timeline li:before {
+      content: "";
+      position: absolute;
+      left: -12px;
+      top: 12px;
+      width: 16px;
+      height: 16px;
+      background-color: #ccc;
+      border-radius: 50%;
+    }
+
+    .timeline li.complete {
+      border-color: #4caf50;
+    }
+
+    .timeline li.complete:before {
+      background-color: #4caf50;
+    }
+
+    .timeline li.active {
+      border-color: #ff9800;
+    }
+
+    .timeline li.active:before {
+      background-color: #ff9800;
+    }
+
+    .timeline li span {
+      font-weight: 500;
+      display: block;
+    }
+
+    .timeline li small {
+      font-size: 12px;
+      color: #777;
+    }
+
+    ul.cart-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.cart-list li {
+      padding: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="summary-card">
+    <h2 class="mb-4">🧾 Order Summary</h2>
+    <hr>
+
+    <div id="orderDetails"></div>
+
+    <p><span class="label">Payment Mode:</span> Cash on Delivery</p>
+    <p><span class="label">Tracking ID:</span> <span id="trackID"></span></p>
+
+    <!-- Delivery Timeline -->
+    <div class="mt-5">
+      <h4 class="text-success">📦 Delivery Timeline</h4>
+      <ul class="timeline mt-4" id="timeline">
+        <li><span>Order Placed</span><small>April 12, 2025</small></li>
+        <li><span>Packed</span><small>April 13, 2025</small></li>
+        <li><span>Dispatched from Warehouse</span><small>April 14, 2025</small></li>
+        <li><span>Reached Regional Hub</span><small>April 15, 2025</small></li>
+        <li><span>Out for Delivery</span><small>April 16, 2025</small></li>
+        <li><span>Delivered</span><small>April 17, 2025</small></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Farm Equipment Market | Happy Farming! 🚜</p>
+  </footer>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const delivery = JSON.parse(localStorage.getItem("deliveryDetails")) || {};
+
+    const orderDiv = document.getElementById("orderDetails");
+
+    if (cart.length === 0) {
+      orderDiv.innerHTML = "<p>No items in cart!</p>";
+    } else {
+      let total = 0;
+      let itemsHTML = '<ul class="cart-list">';
+      cart.forEach(item => {
+        itemsHTML += `<li>${item.name} - ₹${item.price}</li>`;
+        total += item.price;
+      });
+      itemsHTML += '</ul>';
+
+      orderDiv.innerHTML = `
+        <p><span class="label">Products:</span>${itemsHTML}</p>
+        <p><span class="label">Total:</span> ₹${total}</p>
+        <p><span class="label">Customer Name:</span> ${delivery.name || '-'}</p>
+        <p><span class="label">Phone:</span> ${delivery.phone || '-'}</p>
+        <p><span class="label">Pincode:</span> ${delivery.pincode || '-'}</p>
+        <p><span class="label">State:</span> ${delivery.state || '-'}</p>
+        <p><span class="label">District:</span> ${delivery.district || '-'}</p>
+      `;
+    }
+
+    const trackingID = "FARM" + Math.floor(Math.random() * 1000000);
+    document.getElementById("trackID").textContent = trackingID;
+
+    // Realtime tracking logic
+    const orderDate = new Date(2025, 3, 12); // April 12, 2025
+    const today = new Date();
+    const diffDays = Math.floor((today - orderDate) / (1000 * 60 * 60 * 24));
+    const stages = document.querySelectorAll("#timeline li");
+
+    stages.forEach((stage, index) => {
+      if (index < diffDays) {
+        stage.classList.add("complete");
+      } else if (index === diffDays) {
+        stage.classList.add("active");
+      }
+    });
+  </script>
+</body>
+</html>

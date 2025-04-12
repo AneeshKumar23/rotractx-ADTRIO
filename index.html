@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Loan Eligibility Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4CAF50, #f6f8f4);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            transition: background 1s ease-in-out;
+        }
+    
+        button {
+            padding: 12px 20px;
+            background-color: #fffffd;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #FFB300;
+            transform: scale(1.1);
+        }
+    
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s forwards;
+        }
+    
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .slide-up {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideUp 0.7s forwards;
+        }
+    
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #FFD700;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite, pulse 1.5s infinite alternate;
+            display: none;
+            margin: 20px auto;
+        }
+    
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+    
+        @keyframes pulse {
+            100% { transform: scale(1.2); }
+        }
+    
+        .scheme-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .scheme-category {
+            flex: 1;
+            margin: 10px;
+            padding: 10px;
+            background-color: rgba(7, 160, 255, 0.815);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .scheme-card {
+            background-color: white;
+            color: black;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .scheme-card:hover {
+            transform: scale(1.05);
+        }
+
+        #languageSelection {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+    
+        /* Additional content styles */
+        #aboutLoans {
+            background-color: white;
+            color: black;
+            padding: 30px;
+            margin-top: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    
+        #aboutLoans h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    
+        #aboutLoans p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    
+        /* New styles for question text and input */
+        #questionText {
+            font-size: 24px; /* Increase font size for questions */
+            margin-bottom: 10px; /* Add some space below the question */
+        }
+    
+        #answerInput, #answerSelect {
+            width: 300px; /* Increase width of input */
+            height: 40px; /* Increase height of input */
+            font-size: 18px; /* Increase font size of input text */
+            padding: 5px;
+            border-radius: 5px; 
+            border: 1px solid #ccc; 
+        }
+    </style>
+</head>
+<body>
+    <header><h1 class="fade-in">Find Your Best Loan Scheme</h1></header>
+
+    <!-- Language Selection -->
+    <div id="languageSelection" class="fade-in">
+        <h2>Select Language / மொழி தேர்வு செய்யவும்</h2>
+        <button id="englishButton">English</button>
+        <button id="tamilButton">தமிழ்</button>
+    </div>
+
+    <main>
+        <center><button id="startQuestions" class="fade-in" style="display: none;">Start</button></center>
+        <div id="questionContainer" class="slide-up" style="display: none;">
+            <p id="questionText"></p>
+            <div id="answerContainer"></div>
+            <center><button id="nextQuestion" style="display: none;">Next</button></center>
+            <center><button id="replayQuestion" style="display: none;">Replay Question</button></center>
+        </div>
+        <div class="loader" id="loader"></div>
+        <section id="results" style="display: none;">
+            <h2 class="fade-in">Eligible Loan Schemes</h2>
+            <div class="scheme-container">
+                <div class="scheme-category" id="govtSchemes">
+                    <h3>Government Schemes</h3>
+                    <div id="govtSchemeContainer"></div>
+                </div>
+                <div class="scheme-category" id="bankSchemes">
+                    <h3>Bank Schemes</h3>
+                    <div id="bankSchemeContainer"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Additional Content Section -->
+    <section id="aboutLoans">
+        <h2>About Farmer Loan Schemes</h2>
+        <p>
+            Loans for farmers are crucial for the development and growth of the agricultural sector. They help farmers invest in modern equipment, improve crop yield, and ensure a stable income for themselves and their families. Several government and private schemes are available to provide financial assistance to farmers for various purposes, including crop production, equipment purchase, irrigation systems, and livestock management.
+        </p>
+        <p>
+            Farmers can access loans at subsidized interest rates with flexible repayment terms. These loans are specifically designed to meet the financial needs of farmers, ensuring that they can continue to improve productivity and secure a better future.
+        </p>
+        <p>
+            By using this eligibility checker, farmers can quickly find out which loan schemes they may be eligible for based on factors like land size, income, age, and specific needs such as irrigation or livestock.
+        </p>
+        <p>
+            For more information on various schemes and how to apply, visit the official websites of the government agricultural departments or talk to your local bank representative.
+        </p>
+    </section>
+
+    <script>
+        const startButton = document.getElementById("startQuestions");
+        const questionContainer = document.getElementById("questionContainer");
+        const questionText = document.getElementById("questionText");
+        const answerContainer = document.getElementById("answerContainer");
+        const nextButton = document.getElementById("nextQuestion");
+        const replayButton = document.getElementById("replayQuestion");
+        const resultsSection = document.getElementById("results");
+        const loader = document.getElementById("loader");
+        const govtSchemeContainer = document.getElementById("govtSchemeContainer");
+        const bankSchemeContainer = document.getElementById("bankSchemeContainer");
+        const englishButton = document.getElementById("englishButton");
+        const tamilButton = document.getElementById("tamilButton");
+        const languageSelection = document.getElementById("languageSelection");
+
+        let language = 'english'; // default language
+        let voices = [];
+
+        const questionsEnglish = [
+            { question: "How big is your land (in acres)?", type: "input" },
+            { question: "What type of crops do you grow?", type: "select", options: ["Rice", "Wheat", "Sugarcane", "Vegetables", "Fruits", "Others"] },
+            { question: "What is your annual income (in INR)?", type: "input" },
+            { question: "What is your age?", type: "input" },
+            { question: "Do you own a tractor?", type: "select", options: ["Yes", "No"] },
+            { question: "Do you practice organic farming?", type: "select", options: ["Yes", "No"] },
+            { question: "Do you need funds for irrigation?", type: "select", options: ["Yes", "No"] },
+            { question: "Do you own livestock?", type: "select", options: ["Yes", "No"] }
+        ];
+
+        const questionsTamil = [
+            { question: "உங்கள் நிலத்தின் பரப்பளவு எவ்வளவு? (ஏக்கர் எனக் கணக்கிடவும்)", type: "input" },
+            { question: "நீங்கள் எதை பயிரிடுகிறீர்கள்?", type: "select", options: ["பச்சைப்பயிர்", "சர்க்கரை கம்பி", "சர்க்கரை கம்பி", "பருத்தி", "பழங்கள்", "பொது"] },
+            { question: "உங்கள் வருடாந்திர வருமானம் எவ்வளவு? (INR இல்)", type: "input" },
+            { question: "உங்கள் வயது என்ன?", type: "input" },
+            { question: "உங்களுக்கு ஒரு டிராக்டர் உண்டா?", type: "select", options: ["ஆம்", "இல்லை"] },
+            { question: "நீங்கள் காரிக விவசாயம் செய்கிறீர்களா?", type: "select", options: ["ஆம்", "இல்லை"] },
+            { question: "நீங்கள் குடிநீருக்கான நிதி தேவையா?", type: "select", options: ["ஆம்", "இல்லை"] },
+            { question: "உங்களுக்கு விலங்கு உண்டு?", type: "select", options: ["ஆம்", "இல்லை"] }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userResponses = [];
+
+        englishButton.addEventListener("click", () => setLanguage('english'));
+        tamilButton.addEventListener("click", () => setLanguage('tamil'));
+
+        function setLanguage(selectedLanguage) {
+            language = selectedLanguage;
+            languageSelection.style.display = "none";
+            startButton.style.display = "block";
+            loadQuestion();
+        }
+
+        function populateVoiceList() {
+            voices = window.speechSynthesis.getVoices();
+            console.log("Available voices:", voices); // Debugging line to check available voices
+        }
+
+        window.speechSynthesis.onvoiceschanged = populateVoiceList;
+
+        function getVoiceForLanguage(lang) {
+            const voice = voices.find(voice => voice.lang === lang);
+            if (!voice) {
+                console.warn(`Voice for language ${lang} not found. Using default voice.`); // Debugging line
+            }
+            return voice || voices[0]; // Fallback to the first available voice
+        }
+
+        function loadQuestion() {
+            const currentQuestion = (language === 'english' ? questionsEnglish : questionsTamil)[currentQuestionIndex];
+            questionText.innerText = currentQuestion.question;
+            answerContainer.innerHTML = ""; // Clear previous answers
+
+            // Delay before reading the question
+            setTimeout(() => {
+                const utterance = new SpeechSynthesisUtterance(currentQuestion.question);
+                const voice = getVoiceForLanguage(language === 'english' ? 'en-US' : 'ta-IN');
+                utterance.voice = voice; // Set the voice for the utterance
+                window.speechSynthesis.speak(utterance);
+            }, 500); // 500 ms delay
+
+            if (currentQuestion.type === "input") {
+                const input = document.createElement("input");
+                input.type = "text";
+                input.id = "answerInput";
+                input.style.width = "300px"; // Set width for input
+                input.style.height = "40px"; // Set height for input
+                input.style.fontSize = "18px"; // Set font size for input
+                answerContainer.appendChild(input);
+            } else if (currentQuestion.type === "select") {
+                const select = document.createElement("select");
+                select.id = "answerSelect";
+                currentQuestion.options.forEach(option => {
+                    const opt = document.createElement("option");
+                    opt.value = option.toLowerCase();
+                    opt.textContent = option;
+                    select.appendChild(opt);
+                });
+                answerContainer.appendChild(select);
+
+                // Read the options after the question
+                setTimeout(() => {
+                    const optionsUtterance = new SpeechSynthesisUtterance("Options are: " + currentQuestion.options.join(", "));
+                    const optionsVoice = getVoiceForLanguage(language === 'english' ? 'en-US' : 'ta-IN');
+                    optionsUtterance.voice = optionsVoice; // Set the voice for the options
+                    window.speechSynthesis.speak(optionsUtterance);
+                }, 1000); // 1 second delay after the question
+            }
+
+            // Show the next and replay buttons
+            nextButton.style.display = "block";
+            replayButton.style.display = "block";
+        }
+
+        startButton.addEventListener("click", () => {
+            startButton.style.display = "none";
+            questionContainer.style.display = "block";
+            loadQuestion();
+        });
+
+        nextButton.addEventListener("click", () => {
+            // Stop any ongoing speech
+            window.speechSynthesis.cancel();
+
+            const answerInput = document.getElementById("answerInput");
+            const answerSelect = document.getElementById("answerSelect");
+
+            if (answerInput) {
+                userResponses.push(answerInput.value.toLowerCase());
+            } else if (answerSelect) {
+                userResponses.push(answerSelect.value);
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < (language === 'english' ? questionsEnglish.length : questionsTamil.length)) {
+                loadQuestion();
+            } else {
+                questionContainer.style.display = "none";
+                loader.style.display = "block";
+                setTimeout(showResults, 3000);
+            }
+        });
+
+        replayButton.addEventListener("click", () => {
+            loadQuestion(); // Replay the current question
+        });
+
+        function showResults() {
+            loader.style.display = "none";
+            resultsSection.style.display = "block";
+            govtSchemeContainer.innerHTML = "";
+            bankSchemeContainer.innerHTML = "";
+
+            const landSize = parseFloat(userResponses[0]);
+            const cropType = userResponses[1];
+            const income = parseInt(userResponses[2]);
+            const age = parseInt(userResponses[3]);
+            const ownsTractor = userResponses[4] === "yes";
+            const organicFarming = userResponses[5] === "yes";
+            const irrigationNeeded = userResponses[6] === "yes";
+            const ownsLivestock = userResponses[7] === "yes";
+
+            const schemes = [
+                { name: "PM Kisan Credit Card (KCC)", bank: "Govt", minLand: 0.5, maxIncome: 500000, ageLimit: 65, link: "kcc1.html" },
+                { name: "NABARD Agriculture Loan", bank: "Govt", minLand: 2, maxIncome: 1000000, ageLimit: 60, link: "nab.html" },
+                { name: "SBI Agri Loan", bank: "SBI", minLand: 1, maxIncome: 800000, ageLimit: 65, link: "sbi.html" },
+                { name: "HDFC Farmers Loan", bank: "HDFC", minLand: 0.5, maxIncome: 700000, ageLimit: 60, link: "hdfc.html" },
+                { name: "ICICI Kisan Loan", bank: "ICICI", minLand: 1, maxIncome: 900000, ageLimit: 65, link: "" },
+                { name: "PNB Kisan Tatkal Loan", bank: "PNB", minLand: 1, maxIncome: 750000, ageLimit: 65, link: "" },
+                { name: "Axis Bank Agriculture Loan", bank: "Axis Bank", minLand: 1, maxIncome: 850000, ageLimit: 60, link: "" },
+                { name: "Canara Bank Agri Gold Loan", bank: "Canara Bank", minLand: 0.5, maxIncome: 800000, ageLimit: 65, link: "" },
+                { name: "Yes Bank Agri Business Loan", bank: "Yes Bank", minLand: 1, maxIncome: 950000, ageLimit: 60, link: "" },
+                { name: "Poultry Farm Loan", bank: "Govt", minLand: 1, maxIncome: 800000, ageLimit: 60, link: "" },
+                { name: "Drip Irrigation Loan", bank: "Govt", minLand: 0, maxIncome: 1000000, ageLimit: 55, link: "" },
+                { name: "Solar Pump Loan", bank: "Govt", minLand: 1, maxIncome: 1100000, ageLimit: 60, irrigation: true, link: "" },
+                { name: "Tractor Loan", bank: "SBI", minLand: 1, maxIncome: 1200000, ageLimit: 65, tractor: true, link: "" },
+                { name: "Organic Farming Loan", bank: "Govt", minLand: 1, maxIncome: 1200000, ageLimit: 65, organic: true, link: "" },
+                { name: "Cold Storage Loan", bank: "Govt", minLand: 2, maxIncome: 1500000, ageLimit: 60, link: "" },
+                { name: "Greenhouse Farming Loan", bank: "HDFC", minLand: 1, maxIncome: 1300000, ageLimit: 65, greenhouse: true, link: "" },
+                { name: "Dairy Farming Loan", bank: "ICICI", minLand: 1, maxIncome: 1000000, ageLimit: 60, dairy: true, link: "" },
+                { name: "Aquaculture Loan", bank: "PNB", minLand: 0, maxIncome: 1200000, ageLimit: 60, aquaculture: true, link: "" },
+                { name: "Sericulture Loan", bank: "Axis Bank", minLand: 0.5, maxIncome: 900000, ageLimit: 60, sericulture: true, link: "" },
+                { name: "Farm Mechanization Loan", bank: "SBI", minLand: 1, maxIncome: 1400000, ageLimit: 65, mechanization: true, link: "" },
+                { name: "Floriculture Loan", bank: "Canara Bank", minLand: 0.5, maxIncome: 1100000, ageLimit: 60, floriculture: true, link: "" },
+                { name: "Agro Processing Loan", bank: "Yes Bank", minLand: 2, maxIncome: 1500000, ageLimit: 65, agroProcessing: true, link: "" },
+                { name: "Horticulture Loan", bank: "HDFC", minLand: 1, maxIncome: 1200000, ageLimit: 60, horticulture: true, link: "" },
+                { name: "Bee Keeping Loan", bank: "ICICI", minLand: 0, maxIncome: 800000, ageLimit: 55, beekeeping: true, link: "" }
+            ];
+
+            const eligibleGovtSchemes = schemes.filter(scheme => scheme.bank === "Govt" && 
+                landSize >= scheme.minLand && income <= scheme.maxIncome && age <= scheme.ageLimit
+            );
+
+            const eligibleBankSchemes = schemes.filter(scheme => scheme.bank !== "Govt" && 
+                landSize >= scheme.minLand && income <= scheme.maxIncome && age <= scheme.ageLimit
+            );
+
+            eligibleGovtSchemes.forEach(scheme => {
+                const schemeCard = document.createElement("div");
+                schemeCard.classList.add("scheme-card");
+                schemeCard.innerHTML = `
+                    <h3>${scheme.name}</h3>
+                    <p>Bank: ${scheme.bank}</p>
+                    <p>Land size requirement: ${scheme.minLand} acres</p>
+                    <p>Income eligibility: Up to ₹${scheme.maxIncome}</p>
+                    <p>Age limit: Up to ${scheme.ageLimit} years</p>
+                    <a href="${scheme.link}" target="_blank" style="color: blue; text-decoration: underline;">More Details</a>
+                `;
+                govtSchemeContainer.appendChild(schemeCard);
+            });
+
+            eligibleBankSchemes.forEach(scheme => {
+                const schemeCard = document.createElement("div");
+                schemeCard.classList.add("scheme-card");
+                schemeCard.innerHTML = `
+                    <h3>${scheme.name}</h3>
+                    <p>Bank: ${scheme.bank}</p>
+                    <p>Land size requirement: ${scheme.minLand} acres</p>
+                    <p>Income eligibility: Up to ₹${scheme.maxIncome}</p>
+                    <p>Age limit: Up to ${scheme.ageLimit} years</p>
+                    <a href="${scheme.link}" target="_blank" style="color: blue; text-decoration: underline;">More Details</a>
+                `;
+                bankSchemeContainer.appendChild(schemeCard);
+            });
+        }
+    </script>
+</body>
+</html>

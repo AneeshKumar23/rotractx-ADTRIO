@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NABARD Agriculture Loan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+      color: #e9f1ea;
+    }
+
+    ul {
+      line-height: 1.6;
+    }
+
+    .language-selector {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .language-selector button {
+      padding: 10px 15px;
+      margin: 0 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid #4CAF50;
+      background-color: white;
+      color: #4CAF50;
+      border-radius: 5px;
+    }
+
+    .language-selector button:hover {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .apply-button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .apply-button button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .apply-button button:hover {
+      background-color: #45a049;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      color: #4CAF50;
+    }
+
+    .feature-list, .interest-list, .eligibility-list, .documents-list, .benefits-list {
+      padding-left: 20px;
+      list-style-type: disc;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 id="title">NABARD Agriculture Loan</h1>
+  </header>
+
+  <div class="container">
+    <!-- Language selection -->
+    <div class="language-selector">
+      <button onclick="setLanguage('en')">English</button>
+      <button onclick="setLanguage('hi')">हिंदी</button>
+      <button onclick="setLanguage('ta')">தமிழ்</button>
+    </div>
+
+    <div class="section">
+      <h2 id="about"></h2>
+      <p id="description"></p>
+    </div>
+
+    <div class="section">
+      <h2 id="features"></h2>
+      <ul id="featuresList" class="feature-list"></ul>
+    </div>
+
+    <div class="section">
+      <h2 id="interest"></h2>
+      <ul id="interestList" class="interest-list"></ul>
+    </div>
+
+    <div class="section">
+      <h2 id="eligibility"></h2>
+      <ul id="eligibilityList" class="eligibility-list"></ul>
+    </div>
+
+    <div class="section">
+      <h2 id="documents"></h2>
+      <ul id="documentsList" class="documents-list"></ul>
+    </div>
+
+    <div class="section">
+      <h2 id="benefits"></h2>
+      <ul id="benefitsList" class="benefits-list"></ul>
+    </div>
+
+    <img src="nabamo.png" width="900px">
+
+    <div class="apply-button">
+      <a href="https://www.nabard.org" class="button-link" target="_blank">
+        <button>Apply Now</button>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const nabardTranslations = {
+      en: {
+        title: "NABARD Agriculture Loan",
+        about: "About the Scheme",
+        description: "NABARD (National Bank for Agriculture and Rural Development) supports agricultural development by refinancing loans provided by other banks for agriculture and allied activities. These loans aim to improve productivity, support infrastructure development, and uplift the livelihood of farmers in rural areas.",
+        features: "Features",
+        featuresList: [
+          "Refinancing to banks for short-term, medium-term, and long-term agricultural credit.",
+          "Support for irrigation, farm mechanization, storage, and marketing infrastructure.",
+          "Custom hiring centers, dairy development, fishery, poultry, etc., are covered."
+        ],
+        interest: "Interest Rates and Loan Details",
+        interestList: [
+          "Interest rates vary depending on the bank and the nature of the loan.",
+          "Interest subvention schemes may apply for specific projects.",
+          "Flexible repayment tenure: usually 3 to 15 years depending on the project.",
+          "Loans available for individuals, SHGs, cooperatives, and agripreneurs."
+        ],
+        eligibility: "Eligibility",
+        eligibilityList: [
+          "Farmers (individual or group-based)",
+          "Farmer Producer Organizations (FPOs)",
+          "Self Help Groups (SHGs), Joint Liability Groups (JLGs)",
+          "Agricultural entrepreneurs and cooperatives"
+        ],
+        documents: "Documents Required",
+        documentsList: [
+          "Loan application form",
+          "Land ownership proof / lease agreement",
+          "Project report (for term loans)",
+          "KYC documents: Aadhaar, PAN, etc.",
+          "Photographs"
+        ],
+        benefits: "Benefits",
+        benefitsList: [
+          "Financial support for improving agricultural infrastructure",
+          "Longer repayment periods",
+          "Support for modern farming techniques and equipment",
+          "Enables rural employment and income generation"
+        ]
+      },
+      hi: {
+        title: "नाबार्ड कृषि ऋण",
+        about: "योजना के बारे में",
+        description: "नाबार्ड (राष्ट्रीय कृषि और ग्रामीण विकास बैंक) कृषि और संबद्ध गतिविधियों के लिए बैंकों द्वारा दिए गए ऋणों को पुनर्वित्त करके कृषि विकास को बढ़ावा देता है। ये ऋण किसानों की उत्पादकता बढ़ाने, बुनियादी ढांचे के विकास और ग्रामीण क्षेत्रों में जीवन स्तर सुधारने में मदद करते हैं।",
+        features: "विशेषताएँ",
+        featuresList: [
+          "लघु, मध्यम और दीर्घकालिक कृषि ऋणों के लिए बैंकों को पुनर्वित्त।",
+          "सिंचाई, कृषि यंत्रीकरण, भंडारण और विपणन ढांचे के लिए सहायता।",
+          "कस्टम हायरिंग सेंटर, डेयरी, मत्स्य पालन, कुक्कुट पालन शामिल हैं।"
+        ],
+        interest: "ब्याज दरें और ऋण विवरण",
+        interestList: [
+          "ब्याज दरें बैंक और ऋण की प्रकृति पर निर्भर करती हैं।",
+          "विशेष परियोजनाओं के लिए ब्याज सब्सिडी योजनाएं लागू हो सकती हैं।",
+          "पुनर्भुगतान अवधि 3 से 15 वर्ष तक लचीली होती है।",
+          "ऋण उपलब्ध है व्यक्तियों, SHGs, सहकारी समितियों और कृषि उद्यमियों के लिए।"
+        ],
+        eligibility: "पात्रता",
+        eligibilityList: [
+          "किसान (व्यक्तिगत या समूह आधारित)",
+          "किसान उत्पादक संगठन (FPOs)",
+          "स्व-सहायता समूह (SHGs), संयुक्त देयता समूह (JLGs)",
+          "कृषि उद्यमी और सहकारी समितियाँ"
+        ],
+        documents: "आवश्यक दस्तावेज़",
+        documentsList: [
+          "ऋण आवेदन पत्र",
+          "भूमि स्वामित्व प्रमाण / पट्टा समझौता",
+          "परियोजना रिपोर्ट (टर्म लोन के लिए)",
+          "KYC दस्तावेज़: आधार, पैन आदि",
+          "फोटो"
+        ],
+        benefits: "लाभ",
+        benefitsList: [
+          "कृषि बुनियादी ढांचे में सुधार के लिए वित्तीय सहायता",
+          "लंबी पुनर्भुगतान अवधि",
+          "आधुनिक कृषि तकनीकों और उपकरणों का समर्थन",
+          "ग्रामीण रोजगार और आय सृजन को बढ़ावा"
+        ]
+      },
+      ta: {
+        title: "நபார்டு விவசாயக் கடன்",
+        about: "திட்டத்தைப் பற்றி",
+        description: "நபார்டு (தேசிய விவசாய மற்றும் கிராம வளர்ச்சி வங்கி) விவசாயம் மற்றும் அதனுடன் தொடர்புடைய நடவடிக்கைகளுக்கான கடன்களை வழங்கும் வங்கிகளுக்கு மறுபணம் வழங்குவதன் மூலம் விவசாய வளர்ச்சியை ஆதரிக்கிறது. இந்த கடன்கள் உற்பத்தித்திறனை மேம்படுத்த, ஊரக வாழ்வாதாரத்தை மேம்படுத்த மற்றும் புனித கட்டமைப்பை உருவாக்க உதவுகின்றன.",
+        features: "அம்சங்கள்",
+        featuresList: [
+          "வங்கிகளுக்கு குறுகிய, நடுத்தர மற்றும் நீண்டகால விவசாயக் கடன்களுக்கு மறுபணம் வழங்கல்.",
+          "நீர்ப்பாசனம், விவசாய இயந்திரமயமாக்கல், சேமிப்பு மற்றும் சந்தை கட்டமைப்புக்கு ஆதரவு.",
+          "தனிப்பயன் உதிரி மையங்கள், பண்ணையமாடு வளர்ப்பு, மீன் மற்றும் கோழி வளர்ப்பு போன்றவை உட்பட."
+        ],
+        interest: "வட்டி விகிதங்கள் மற்றும் கடன் விவரங்கள்",
+        interestList: [
+          "வட்டி விகிதங்கள் வங்கி மற்றும் கடனின் தன்மையின் அடிப்படையில் மாறுகின்றன.",
+          "சிறப்பு திட்டங்களுக்கான வட்டி சலுகைகள் அமல்படுத்தப்படலாம்.",
+          "திரும்ப கட்டுதல் காலம் 3 முதல் 15 வருடங்கள் வரை இருக்கலாம்.",
+          "கடன்கள் தனிப்பட்டவர்கள், SHGs, கூட்டுறவு அமைப்புகள் மற்றும் விவசாய தொழில்முனைவோர் மூலம் பெறப்படலாம்."
+        ],
+        eligibility: "தகுதி",
+        eligibilityList: [
+          "விவசாயிகள் (தனிப்பட்டவர் அல்லது குழுவாக)",
+          "விவசாயி உற்பத்தியாளர் அமைப்புகள் (FPOs)",
+          "சுய உதவி குழுக்கள் (SHGs), இணைந்த கடன் குழுக்கள் (JLGs)",
+          "விவசாய தொழில்முனைவோர் மற்றும் கூட்டுறவு அமைப்புகள்"
+        ],
+        documents: "ஆவணங்கள் தேவை",
+        documentsList: [
+          "கடன் விண்ணப்பப் படிவம்",
+          "பாரம்பரிய உரிமை அல்லது 임ோடை ஒப்பந்தம்",
+          "செய்தி திட்டத் தொகுப்பு (அத்துடன்)"
+        ]
+      }
+    };
+
+    function setLanguage(language) {
+      const lang = nabardTranslations[language];
+      document.getElementById('title').textContent = lang.title;
+      document.getElementById('about').textContent = lang.about;
+      document.getElementById('description').textContent = lang.description;
+      document.getElementById('features').textContent = lang.features;
+      document.getElementById('featuresList').innerHTML = lang.featuresList.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('interest').textContent = lang.interest;
+      document.getElementById('interestList').innerHTML = lang.interestList.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('eligibility').textContent = lang.eligibility;
+      document.getElementById('eligibilityList').innerHTML = lang.eligibilityList.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('documents').textContent = lang.documents;
+      document.getElementById('documentsList').innerHTML = lang.documentsList.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('benefits').textContent = lang.benefits;
+      document.getElementById('benefitsList').innerHTML = lang.benefitsList.map(item => `<li>${item}</li>`).join('');
+    }
+
+    // Set default language
+    setLanguage('en');
+  </script>
+</body>
+</html>

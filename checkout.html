@@ -1,0 +1,106 @@
+<!-- checkout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - Delivery Information</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap & Fonts -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4fdf8;
+      padding-top: 40px;
+    }
+
+    .checkout-container {
+      background-color: #e8f5e9;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2e7d32;
+    }
+
+    .form-control {
+      border-radius: 8px;
+    }
+
+    .btn-success {
+      background-color: #43a047;
+      border: none;
+      width: 100%;
+      font-size: 1.1rem;
+    }
+
+    .btn-success:hover {
+      background-color: #388e3c;
+    }
+
+    label {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="checkout-container">
+    <h2><i class="fas fa-truck"></i> Delivery Information</h2>
+    <form onsubmit="submitOrder(event)">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" class="form-control" id="phone" pattern="[0-9]{10}" required>
+      </div>
+      <div class="form-group">
+        <label>Pincode</label>
+        <input type="text" class="form-control" id="pincode" required>
+      </div>
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" class="form-control" id="state" required>
+      </div>
+      <div class="form-group">
+        <label>District</label>
+        <input type="text" class="form-control" id="district" required>
+      </div>
+      <div class="form-group">
+        <label>Full Address</label>
+        <textarea class="form-control" id="address" rows="3" placeholder="House number, street, village, etc." required></textarea>
+      </div>
+      <button class="btn btn-success mt-3" type="submit">Place Order</button>
+    </form>
+  </div>
+
+  <script>
+    function submitOrder(e) {
+      e.preventDefault();
+      const details = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        pincode: document.getElementById("pincode").value,
+        state: document.getElementById("state").value,
+        district: document.getElementById("district").value,
+        address: document.getElementById("address").value
+      };
+      localStorage.setItem("deliveryDetails", JSON.stringify(details));
+      window.location.href = "order-summary.html";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-image: url('image.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .weather-container {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 430px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    #datetime {
+      font-size: 14px;
+      margin-bottom: 15px;
+      opacity: 0.9;
+    }
+
+    input {
+      padding: 10px;
+      width: 70%;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 15px;
+      font-size: 15px;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    .unit-toggle {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .temp {
+      font-size: 38px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .weather-icon {
+      width: 70px;
+      margin: 10px auto;
+    }
+
+    .forecast {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 25px;
+    }
+
+    .forecast-day {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 10px;
+      width: 30%;
+      margin-bottom: 12px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .forecast-day img {
+      width: 40px;
+    }
+
+    @media screen and (max-width: 480px) {
+      .forecast-day {
+        width: 45%;
+      }
+    }
+  </style>
+</head>
+<body onload="initWeather()">
+  <div class="weather-container">
+    <h2 id="city-name">Weather Dashboard</h2>
+    <div id="datetime"></div>
+
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button onclick="searchCity()">Search</button>
+
+    <div class="unit-toggle">
+      <label><input type="checkbox" id="unitToggle" onchange="toggleUnit()"> Show in °F</label>
+    </div>
+
+    <div class="weather-info" id="weather">
+      <img id="icon" class="weather-icon" />
+      <div class="temp" id="temperature">--°</div>
+      <p id="description"></p>
+    </div>
+
+    <div class="forecast" id="forecast"></div>
+  </div>
+
+  <script>
+    const apiKey = "b1b15e88fa797225412429c1c50c122a1";
+    let unit = "metric";
+
+    function initWeather() {
+      getLocation();
+      setInterval(() => {
+        document.getElementById("datetime").innerText = new Date().toLocaleString();
+      }, 1000);
+    }
+
+    function toggleUnit() {
+      unit = document.getElementById("unitToggle").checked ? "imperial" : "metric";
+      const city = document.getElementById("city-name").innerText;
+      searchWeatherByCity(city);
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          fetchWeather(pos.coords.latitude, pos.coords.longitude);
+        });
+      } else {
+        alert("Geolocation not supported.");
+      }
+    }
+
+    function searchCity() {
+      const city = document.getElementById("cityInput").value;
+      if (city.trim() !== "") searchWeatherByCity(city);
+    }
+
+    function searchWeatherByCity(city) {
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`)
+        .then(res => res.json())
+        .then(data => {
+          const { lat, lon } = data.coord;
+          fetchWeather(lat, lon, data.name);
+        })
+        .catch(() => alert("City not found"));
+    }
+
+    function fetchWeather(lat, lon, overrideCity = null) {
+      const weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${unit}`;
+      const forecastURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=${unit}`;
+
+      fetch(weatherURL)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("city-name").innerText = overrideCity || data.name;
+          document.getElementById("temperature").innerText = `${Math.round(data.main.temp)}°`;
+          document.getElementById("description").innerText = data.weather[0].description;
+          document.getElementById("icon").src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+        });
+
+      fetch(forecastURL)
+        .then(res => res.json())
+        .then(data => {
+          const forecast = document.getElementById("forecast");
+          forecast.innerHTML = "";
+          data.daily.slice(1, 6).forEach(day => {
+            const date = new Date(day.dt * 1000);
+            const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
+            forecast.innerHTML += `
+              <div class="forecast-day">
+                <strong>${dayName}</strong>
+                <br />
+                ${Math.round(day.temp.day)}°<br />
+                <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png" />
+                <br />
+                <span>${day.weather[0].main}</span>
+              </div>
+            `;
+          });
+        });
+    }
+  </script>
+</body>
+</html>

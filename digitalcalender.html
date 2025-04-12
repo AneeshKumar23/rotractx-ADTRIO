@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Crop Calendar</title>
+    <style>
+        body {
+          font-family: 'Poppins', sans-serif;
+          background: linear-gradient(to right, #4CAF50, #f6f8f4);
+          color: white;
+          text-align: center;
+          padding: 30px 20px;
+          animation: fadeIn 1s ease-in-out;
+        }
+    
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+    
+        h1 {
+          font-size: 2.8em;
+          margin-bottom: 10px;
+        }
+    
+        p {
+          font-size: 1.1em;
+          margin-bottom: 30px;
+        }
+    
+        .calendar-table {
+          width: 95%;
+          max-width: 1100px;
+          margin: 20px auto;
+          border-collapse: collapse;
+          background: rgba(255, 255, 255, 0.15);
+          border-radius: 15px;
+          backdrop-filter: blur(6px);
+          overflow: hidden;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+          animation: slideIn 1s ease-in-out;
+        }
+    
+        @keyframes slideIn {
+          from { transform: translateY(-20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+    
+        th, td {
+          padding: 16px 20px;
+          border: 1px solid rgba(255,255,255,0.5);
+          text-align: center;
+          font-size: 1.05em;
+        }
+    
+        th {
+          background: rgba(0, 0, 0, 0.3);
+          font-weight: 600;
+        }
+    
+        td span {
+          display: inline-block;
+          padding: 6px 12px;
+          border-radius: 6px;
+          font-weight: 500;
+        }
+    
+        .planting { background: #FFA726; }
+        .fertilizing { background: #FFEE58; color: black; }
+        .harvesting { background: #F44336; }
+    
+        select {
+          padding: 12px 18px;
+          margin: 10px 8px;
+          font-size: 1em;
+          border-radius: 8px;
+          border: none;
+          background-color: #ffffffcc;
+          color: #333;
+          font-weight: 500;
+          cursor: pointer;
+        }
+    
+        select:hover {
+          background-color: #fff;
+        }
+    
+        .reset-button {
+          padding: 12px 24px;
+          font-size: 1em;
+          background-color: #FF7043;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          color: white;
+          cursor: pointer;
+          transition: 0.3s ease;
+        }
+    
+        .reset-button:hover {
+          background-color: #D32F2F;
+          transform: scale(1.05);
+        }
+    
+        .crop-data {
+          display: none;
+        }
+    
+        .resources {
+          background: rgba(255, 255, 255, 0.15);
+          padding: 20px 25px;
+          border-radius: 15px;
+          width: 90%;
+          max-width: 800px;
+          margin: 40px auto 20px;
+          text-align: center;
+          box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+        }
+    
+        .resources h3 {
+          font-size: 1.6em;
+          margin-bottom: 10px;
+        }
+    
+        .resources p {
+          font-size: 1.1em;
+          margin-bottom: 10px;
+        }
+    
+        .resources ul {
+          list-style: none;
+          padding: 0;
+        }
+    
+        .resources li {
+          margin: 10px 0;
+        }
+    
+        .resources a {
+          display: inline-block;
+          padding: 10px 20px;
+          font-size: 1em;
+          background-color: #FFC107;
+          color: black;
+          border-radius: 6px;
+          text-decoration: none;
+          transition: 0.3s ease;
+        }
+    
+        .resources a:hover {
+          background-color: #FFA000;
+          transform: scale(1.05);
+        }
+      </style>
+</head>
+<body>
+    <h1>🌾 Digital Crop Calendar 📅</h1>
+    <p>Plan your farming activities with this interactive crop calendar!</p>
+
+    <label for="language-select">Select Language:</label>
+    <select id="language-select" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="fr">Français (French)</option>
+    </select>
+
+    <br><br>
+
+    <label for="crop-select">Select Crop:</label>
+    <select id="crop-select" onchange="showCrop()">
+        <option value="none">-- Select --</option>
+        <option value="all">All Crops</option>
+        <option value="wheat">Wheat</option>
+        <option value="rice">Rice</option>
+        <option value="maize">Maize</option>
+        <option value="barley">Barley</option>
+        <option value="soybean">Soybean</option>
+        <option value="cotton">Cotton</option>
+        <option value="potato">Potato</option>
+        <option value="tomato">Tomato</option>
+        <option value="sugarcane">Sugarcane</option>
+        <option value="groundnut">Groundnut</option>
+    </select>
+
+    <button class="reset-button" onclick="resetSelection()">Reset</button>
+
+    <table class="calendar-table">
+        <tr>
+            <th>Crop</th>
+            <th>Best Planting Time</th>
+            <th>Fertilizing Period</th>
+            <th>Harvest Time</th>
+        </tr>
+        <tbody id="crop-info">
+            <tr class="crop-data" id="wheat">
+                <td>Wheat</td>
+                <td><span class="planting">Oct - Dec</span></td>
+                <td><span class="fertilizing">Nov - Jan</span></td>
+                <td><span class="harvesting">Apr - Jun</span></td>
+            </tr>
+            <tr class="crop-data" id="rice">
+                <td>Rice</td>
+                <td><span class="planting">Jun - Aug</span></td>
+                <td><span class="fertilizing">Jul - Sep</span></td>
+                <td><span class="harvesting">Nov - Dec</span></td>
+            </tr>
+            <tr class="crop-data" id="maize">
+                <td>Maize</td>
+                <td><span class="planting">Feb - Apr</span></td>
+                <td><span class="fertilizing">Mar - May</span></td>
+                <td><span class="harvesting">Jul - Sep</span></td>
+            </tr>
+            <tr class="crop-data" id="barley">
+                <td>Barley</td>
+                <td><span class="planting tooltip">Sep - Nov<span class="tooltiptext">Best planted in cool, dry conditions.</span></span></td>
+                <td><span class="fertilizing tooltip">Oct - Dec<span class="tooltiptext">Apply fertilizers during early growth.</span></span></td>
+                <td><span class="harvesting tooltip">Mar - May<span class="tooltiptext">Harvest when grains are fully ripened.</span></span></td>
+            </tr>
+            <tr class="crop-data" id="soybean">
+                <td>Soybean</td>
+                <td><span class="planting tooltip">Apr - Jun<span class="tooltiptext">Plant when soil temperature reaches 70°F.</span></span></td>
+                <td><span class="fertilizing tooltip">May - Jul<span class="tooltiptext">Use balanced fertilizers during growth.</span></span></td>
+                <td><span class="harvesting tooltip">Sep - Oct<span class="tooltiptext">Harvest when leaves start turning yellow.</span></span></td>
+            </tr>
+            <tr class="crop-data" id="cotton">
+                <td>Cotton</td>
+                <td><span class="planting tooltip">Mar - May<span class="tooltiptext">Best planted in warm, dry climates.</span></span></td>
+                <td><span class="fertilizing tooltip">Apr - Jun<span class="tooltiptext">Apply fertilizers after planting.</span></span></td>
+                <td><span class="harvesting tooltip">Sep - Nov<span class="tooltiptext">Harvest when bolls are open.</span></span></td>
+            </tr>
+            <tr class="crop-data" id="potato">
+                <td>Potato</td>
+                <td><span class="planting tooltip">Sep - Nov<span class="tooltiptext">Plant in well-drained, fertile soil.</span></span></td>
+                <td><span class="fertilizing tooltip">Oct - Dec<span class="tooltiptext">Apply organic fertilizers.</span></span></td>
+                <td><span class="harvesting tooltip">Jan - Mar<span class="tooltiptext">Harvest after leaves begin to die.</span></span></td>
+            </tr>
+            <tr class="crop-data" id="tomato">
+                <td>Tomato</td>
+                <td><span class="planting tooltip">Feb - Apr<span class="tooltiptext">Plant in rich, well-drained soil.</span></span></td>
+                <td><span class="fertilizing tooltip">Mar - May<span class="tooltiptext">Apply fertilizers during flowering.</span></span></td>
+                <td><span class="harvesting tooltip">Jun - Aug<span class="tooltiptext">Harvest when fruits are fully ripened.</span></span></td>
+            </tr>
+            <tr class="crop-data" id="sugarcane">
+                <td>Sugarcane</td>
+                <td><span class="planting tooltip">Jan - Mar<span class="tooltiptext">Best planted in warm, tropical climates.</span></span></td>
+                <td><span class="fertilizing tooltip">Feb - Apr<span class="tooltiptext">Apply nitrogen-based fertilizers.</span></span></td>
+                <td><span class="harvesting tooltip">Nov - Jan<span class="tooltiptext">Harvest after leaves turn yellow.</span></span></td>
+            </tr>
+            <tr class="crop-data" id="groundnut">
+                <td>Groundnut</td>
+                <td><span class="planting tooltip">Jun - Jul<span class="tooltiptext">Best planted in sandy, well-drained soil.</span></span></td>
+                <td><span class="fertilizing tooltip">Jul - Aug<span class="tooltiptext">Use fertilizers high in phosphorus.</span></span></td>
+                <td><span class="harvesting tooltip">Sep - Oct<span class="tooltiptext">Harvest when the leaves turn yellow.</span></span></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="resources">
+        <h3>Helpful Resources:</h3>
+        <p>For more information on crop management, visit the following links:</p>
+        <ul>
+            <li><a href="https://www.agriculture.gov" target="_blank">Agriculture Department Resources</a></li>
+            <li><a href="https://www.farmerssupport.com" target="_blank">Farmer Support Hotline</a></li>
+        </ul>
+    </div>
+
+    <script>
+        function showCrop() {
+            let selectedCrop = document.getElementById("crop-select").value;
+            let allCrops = document.querySelectorAll(".crop-data");
+
+            if (selectedCrop === "none") {
+                allCrops.forEach(crop => crop.style.display = "none");
+            } else if (selectedCrop === "all") {
+                allCrops.forEach(crop => crop.style.display = "table-row");
+            } else {
+                allCrops.forEach(crop => crop.style.display = "none");
+                document.getElementById(selectedCrop).style.display = "table-row";
+            }
+        }
+
+        function resetSelection() {
+            document.getElementById("crop-select").value = "none";
+            showCrop();
+        }
+
+        function changeLanguage() {
+            let selectedLanguage = document.getElementById("language-select").value;
+            
+            let translations = {
+                "en": { title: "🌾 Digital Crop Calendar 📅", info: "Plan your farming activities with this interactive crop calendar!", reset: "Reset" },
+                "hi": { title: "🌾 डिजिटल फसल कैलेंडर 📅", info: "इस इंटरैक्टिव फसल कैलेंडर के साथ अपनी कृषि गतिविधियों की योजना बनाएं!", reset: "रीसेट करें" },
+                "ta": { title: "🌾 டிஜிட்டல் பயிர் நாட்காட்டி 📅", info: "இந்த இன்டராக்டிவ் பயிர் நாட்காட்டியுடன் உங்கள் விவசாய நடவடிக்கைகளை திட்டமிடுங்கள்!", reset: "மீட்டமை" },
+                "fr": { title: "🌾 Calendrier Numérique des Cultures 📅", info: "Planifiez vos activités agricoles avec ce calendrier interactif !", reset: "Réinitialiser" }
+            };
+
+            document.querySelector("h1").innerHTML = translations[selectedLanguage].title;
+            document.querySelector("p").innerHTML = translations[selectedLanguage].info;
+            document.querySelector(".reset-button").innerHTML = translations[selectedLanguage].reset;
+        }
+    </script>
+</body>
+</html>

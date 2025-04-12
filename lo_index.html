@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farmer Aadhaar Login</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <img src="https://img.freepik.com/free-vector/farming-background-with-tractor-wheat-field_1308-96299.jpg?w=1380" alt="Farming" class="top-image" />
+      <h2>Welcome, Farmer 👨‍🌾</h2>
+      <p class="subtitle">Login securely with your Aadhaar number</p>
+
+      <form onsubmit="handleLogin(event)">
+        <input type="text" id="aadhaar" maxlength="12" placeholder="Enter 12-digit Aadhaar number" required />
+        <button type="submit">Login</button>
+        <p id="error-message" class="error hidden"></p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let mouseMoved = false;
+    window.addEventListener('mousemove', () => {
+      mouseMoved = true;
+    });
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      const aadhaar = document.getElementById("aadhaar").value.trim();
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.classList.add("hidden");
+      errorMessage.textContent = "";
+
+      if (aadhaar.length !== 12 || isNaN(aadhaar)) {
+        errorMessage.textContent = "❌ Enter a valid 12-digit Aadhaar number.";
+        errorMessage.classList.remove("hidden");
+        return;
+      }
+
+      try {
+        const response = await fetch('aadhaarData.json');
+        const data = await response.json();
+
+        if (data.validAadhaars.includes(aadhaar)) {
+          setTimeout(() => {
+            if (mouseMoved) {
+              window.location.href = "second.html";
+            } else {
+              window.location.href = "bot.html";
+            }
+          }, 500);
+        } else {
+          errorMessage.textContent = "⚠️ Aadhaar not found. Please try again.";
+          errorMessage.classList.remove("hidden");
+        }
+
+      } catch (err) {
+        console.error("Error:", err);
+        errorMessage.textContent = "⚠️ System error. Try again later.";
+        errorMessage.classList.remove("hidden");
+      }
+    }
+  </script>
+</body>
+</html>

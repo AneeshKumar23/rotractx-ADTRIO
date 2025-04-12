@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farmer Inventory</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f5e1;
+      color: #3e2723;
+      margin: 0;
+      padding: 0;
+    }
+
+    #header {
+      background-color: #2e7d32;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 26px;
+    }
+
+    .container {
+      width: 90%;
+      margin: 20px auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #a1887f;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    th {
+      background-color: #43a047;
+      color: white;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      border: 1px solid #a1887f;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #6d4c41;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #4e342e;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #388e3c;
+      color: white;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    h2 {
+      color: #2e7d32;
+    }
+
+    center a button {
+      margin-top: 15px;
+      background-color: #000000;
+    }
+
+    .label-translate {
+      font-size: 12px;
+      color: #616161;
+    }
+
+    .speak-btn {
+      background-color: #ffb300;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .icon {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <section id="header">
+    <h1>👨‍🌾 Farmer's Inventory System</h1>
+  </section>
+
+  <div class="container">
+    <button class="speak-btn" onclick="speakGuide()">🔊 सुनें / వినండి / ऐका</button>
+    <h2>🌾 Add Crop/Product</h2>
+    <table>
+      <tr>
+        <th><span class="icon">🌿</span> Name <br><span class="label-translate">नाम / పేరు / नाव</span></th>
+        <th><span class="icon">💰</span> Price (₹) <br><span class="label-translate">कीमत / ధర / किंमत</span></th>
+        <th><span class="icon">🔢</span> Quantity <br><span class="label-translate">मात्रा / పరిమాణం / प्रमाण</span></th>
+        <th><span class="icon">🧮</span> Total (₹) <br><span class="label-translate">कुल / మొత్తం / एकूण</span></th>
+        <th><span class="icon">➕</span> Action <br><span class="label-translate">जोड़ें / చేర్చండి / जोडा</span></th>
+      </tr>
+      <tr>
+        <td><input type="text" id="product" placeholder="e.g., Tomatoes / टमाटर / టమాటాలు"></td>
+        <td><input type="number" id="price" placeholder="Price" onchange="getTotal()"></td>
+        <td><input type="number" id="quantity" placeholder="Quantity" onchange="getTotal()"></td>
+        <td><input type="text" id="total" value="0" readonly></td>
+        <td><button onclick="addInventory()">Add</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="container" id="allInventory">
+    <h2>📦 My Stock List</h2>
+    <table id="inventoryTable">
+      <tr>
+        <th>Crop/Product</th>
+        <th>Price (₹)</th>
+        <th>Quantity</th>
+        <th>Total (₹)</th>
+        <th>Remove</th>
+      </tr>
+      <tbody id="inventoryBody"></tbody>
+      <tr>
+        <th colspan="3">Grand Total</th>
+        <td id="grandTotal">0</td>
+        <td></td>
+      </tr>
+    </table>
+    <button onclick="clearInventory()">Clear All</button>
+    <button onclick="printData()">Print / Download</button>
+  </div>
+
+  <center>
+    <a href="income.html"><button>📈 View Income Report</button></a>
+  </center>
+
+  <footer>
+    &copy; All Rights Reserved | Made for Farmers 🌾
+  </footer>
+
+  <script>
+    function speakGuide() {
+      const msg = new SpeechSynthesisUtterance();
+      msg.text = "Fill the name of the crop, its price and quantity. Then click add. नीचे नाम, कीमत और मात्रा भरें। फिर जोड़ें दबाएँ।";
+      msg.lang = 'hi-IN';
+      window.speechSynthesis.speak(msg);
+    }
+  </script>
+
+  <script src="invscript.js"></script>
+</body>
+</html>

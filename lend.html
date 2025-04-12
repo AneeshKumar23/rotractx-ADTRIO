@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lend a Product</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f0f2f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #2e7d32;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 3rem auto;
+      padding: 2.5rem;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      color: #2e7d32;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    input, textarea, label {
+      padding: 0.9rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 1rem;
+      background-color: #fafafa;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    button {
+      background: linear-gradient(to right, #4CAF50, #388E3C);
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #43a047, #2e7d32);
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        margin: 1rem;
+        padding: 1.8rem;
+      }
+
+      header {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>Lend Your Product</header>
+
+  <div class="container">
+    <h2>List a Product for Rent</h2>
+    <form id="lendForm">
+      <input type="text" name="name" placeholder="Product Name" required />
+      <textarea name="description" placeholder="Product Description" required></textarea>
+      <input type="number" name="price" placeholder="Price per day (₹)" required />
+      <input type="text" name="address" placeholder="Your Address" required />
+      <input type="tel" name="contact" placeholder="Contact Number" required />
+      <input type="text" name="aadhar" placeholder="Aadhar Number (12 digits)" pattern="[0-9]{12}" maxlength="12" required />
+
+      <label>
+        Available From:
+        <input type="date" name="availableFrom" required />
+      </label>
+
+      <label>
+        Available To:
+        <input type="date" name="availableTo" required />
+      </label>
+
+      <button type="submit">Submit Product</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('lendForm');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // Convert number field to number type
+      data.price = parseFloat(data.price);
+
+      try {
+        const response = await fetch('http://localhost:3009/api/LendProduct/store', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          console.error('Server error:', result.message);
+          alert('Failed to submit product!');
+        } else {
+          console.log('Success:', result);
+          alert(result.message || 'Product submitted!');
+          form.reset();
+        }
+      } catch (err) {
+        console.error('Network or server error:', err);
+        alert('Something went wrong. Check the console for details.');
+      }
+    });
+  </script>
+
+</body>
+</html>

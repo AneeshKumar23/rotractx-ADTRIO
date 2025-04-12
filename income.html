@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Income Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="invstyle.css">
+</head>
+<body >
+    <section id="header">
+        <h1 style="color: white;">Sales Income Report</h1>
+    </section>
+
+    <section id="sales-report">
+        <div class="table">
+            <center><h2>Income Report</h2></center>
+            <table width="100%" border="1">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity Sold</th>
+                    <th>Total Earnings</th>
+                </tr>
+                <tbody id="reportTable">
+                    <!-- Data will be inserted here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="sales-chart" style="color: white;">
+        <h2>Sales Distribution</h2>
+        <canvas id="salesPieChart" style="color: white;"></canvas>
+    </section>
+
+
+    <script src="income.js"></script>
+</body>
+</html>

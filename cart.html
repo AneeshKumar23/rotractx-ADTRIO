@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <!-- FontAwesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8fff8;
+      padding-top: 30px;
+      color: #333;
+    }
+
+    .cart-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .cart-card {
+      border: none;
+      border-left: 5px solid #43a047;
+      background-color: #e8f5e9;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .cart-card:hover {
+      transform: scale(1.01);
+    }
+
+    .cart-card h5 {
+      margin: 0;
+      color: #2e7d32;
+    }
+
+    .remove-btn {
+      background-color: #e53935;
+      border: none;
+      color: white;
+    }
+
+    .remove-btn:hover {
+      background-color: #c62828;
+    }
+
+    .total-section {
+      text-align: right;
+      font-size: 1.3rem;
+      color: #1b5e20;
+      margin-top: 30px;
+    }
+
+    .btn-success {
+      background-color: #43a047;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #388e3c;
+    }
+
+    .empty-msg {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 1.2rem;
+      color: #888;
+    }
+
+    .fa-shopping-cart {
+      color: #43a047;
+      font-size: 2rem;
+    }
+  </style>
+</head>
+<body class="container">
+  <div class="cart-header">
+    <i class="fas fa-shopping-cart"></i>
+    <h2 class="mt-2">Your Cart</h2>
+  </div>
+
+  <div id="cartItems"></div>
+  <div id="cartFooter" style="display: none;">
+    <div class="total-section">
+      <strong>Total: ₹<span id="totalAmount">0</span></strong>
+    </div>
+    <div class="text-right mt-3">
+      <a href="checkout.html" class="btn btn-success">Proceed to Checkout</a>
+    </div>
+  </div>
+
+  <p id="emptyCart" class="empty-msg" style="display: none;">
+    🛒 Your cart is empty. Go back and add some products!
+  </p>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItems = document.getElementById("cartItems");
+    const totalAmount = document.getElementById("totalAmount");
+    const emptyCart = document.getElementById("emptyCart");
+    const cartFooter = document.getElementById("cartFooter");
+
+    if (cart.length === 0) {
+      emptyCart.style.display = "block";
+    } else {
+      cartFooter.style.display = "block";
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        cartItems.innerHTML += `
+          <div class="cart-card d-flex justify-content-between align-items-center">
+            <div>
+              <h5>${item.name}</h5>
+              <p class="mb-0 text-muted">₹${item.price}</p>
+            </div>
+            <button class="btn remove-btn btn-sm" onclick="removeItem(${index})">
+              <i class="fas fa-trash-alt"></i> Remove
+            </button>
+          </div>
+        `;
+      });
+      totalAmount.innerText = total;
+    }
+
+    function removeItem(i) {
+      cart.splice(i, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      location.reload();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sell Your Farm Equipment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap & Fonts -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f1f8f5;
+    }
+    .container {
+      max-width: 800px;
+      margin-top: 50px;
+    }
+    .form-section {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2e7d32;
+      font-weight: bold;
+    }
+    .preview {
+      margin-top: 20px;
+      background-color: #e8f5e9;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .btn-custom {
+      background-color: #43a047;
+      color: #fff;
+      border: none;
+    }
+    .btn-custom:hover {
+      background-color: #388e3c;
+    }
+    .display-box {
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="mb-4 text-center">Sell Your Equipment</h2>
+
+  <form id="sellForm" class="form-section">
+    <div class="form-group">
+      <label>Aadhaar Number</label>
+      <input type="text" class="form-control" required maxlength="12">
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="text" class="form-control" required maxlength="10">
+    </div>
+
+    <div class="form-group">
+      <label>Address</label>
+      <textarea class="form-control" rows="2" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Product Name</label>
+      <select id="productSelect" class="form-control" required>
+        <option value="">Select Product</option>
+        <option value="Tractor">Tractor</option>
+        <option value="Plough">Plough</option>
+        <option value="Combine Harvester">Combine Harvester</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Horse Power (Suggested Range: 20 - 75 HP)</label>
+      <input type="number" class="form-control" id="horsepowerInput" placeholder="Enter Horse Power" required>
+    </div>
+
+    <div class="form-group">
+      <label>Condition of Tire</label><br>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="tireCondition" value="Poor" required>
+        <label class="form-check-label">Poor</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="tireCondition" value="Normal">
+        <label class="form-check-label">Normal</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="tireCondition" value="Good">
+        <label class="form-check-label">Good</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Condition of Product</label>
+      <select id="usageCondition" class="form-control" required>
+        <option value="first-hand">First-hand</option>
+        <option value="second-hand">Second-hand</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Upload Image</label>
+      <input type="file" class="form-control-file" id="imageInput" accept="image/*" required>
+    </div>
+
+    <button type="submit" class="btn btn-custom btn-block">Submit & Show Preview</button>
+  </form>
+
+  <div id="previewSection" class="preview d-none">
+    <h5>📝 Submitted Equipment</h5>
+    <div class="display-box">
+      <p><strong>Product:</strong> <span id="previewName"></span></p>
+      <p><strong>Horse Power:</strong> <span id="previewHP"></span></p>
+      <p><strong>Tire Condition:</strong> <span id="previewTire"></span></p>
+      <p><strong>Usage:</strong> <span id="previewUsage"></span></p>
+      <p><strong>Recommended Price:</strong> ₹<span id="previewPrice"></span></p>
+      <img id="previewImage" src="" class="img-fluid rounded mt-2" style="max-height: 200px;">
+    </div>
+    <a href="buy.html" class="btn btn-outline-success mt-3">Send to Buy Page ➡</a>
+  </div>
+</div>
+
+<script>
+  document.getElementById('sellForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const product = document.getElementById('productSelect').value;
+    const hp = parseInt(document.getElementById('horsepowerInput').value);
+    const tireCondition = document.querySelector('input[name="tireCondition"]:checked').value;
+    const usage = document.getElementById('usageCondition').value;
+    const imageInput = document.getElementById('imageInput').files[0];
+
+    let basePrice = 0;
+    if (product === "Tractor") basePrice = 400000;
+    else if (product === "Plough") basePrice = 60000;
+    else if (product === "Combine Harvester") basePrice = 700000;
+
+    // Adjustments based on HP, tire and usage
+    const hpFactor = hp / 50;
+    const tireFactor = tireCondition === "Good" ? 1 : (tireCondition === "Normal" ? 0.85 : 0.65);
+    const usageFactor = usage === "second-hand" ? 0.75 : 1;
+
+    const finalPrice = Math.round(basePrice * hpFactor * tireFactor * usageFactor);
+
+    // Display
+    document.getElementById('previewName').textContent = product;
+    document.getElementById('previewHP').textContent = hp + " HP";
+    document.getElementById('previewTire').textContent = tireCondition;
+    document.getElementById('previewUsage').textContent = usage;
+    document.getElementById('previewPrice').textContent = finalPrice;
+
+    const reader = new FileReader();
+    reader.onload = function () {
+      document.getElementById('previewImage').src = reader.result;
+
+      // Save to localStorage for buy.html
+      localStorage.setItem("submittedItem", JSON.stringify({
+        name: product,
+        price: finalPrice,
+        image: reader.result
+      }));
+
+      document.getElementById('previewSection').classList.remove('d-none');
+    };
+
+    if (imageInput) reader.readAsDataURL(imageInput);
+  });
+</script>
+
+</body>
+</html>

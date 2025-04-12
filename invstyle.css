@@ -1,0 +1,261 @@
+@font-face{
+    font-family:Montserrat-Regular ;
+    src: url("../fonts/MontserratFonts/Montserrat-Regular.ttf");
+}
+@font-face{
+    font-family:Montserrat-Bold ;
+    src: url("../fonts/MontserratFonts/Montserrat-Bold.ttf");
+}
+@font-face{
+    font-family:Montserrat-Italic ;
+    src: url("../fonts/MontserratFonts/Montserrat-Italic.ttf");
+}
+@font-face{
+    font-family:Montserrat-Light ;
+    src: url("../fonts/MontserratFonts/Montserrat-Light.ttf");
+}
+@font-face{
+    font-family:Montserrat-BoldItalic ;
+    src: url("../fonts/MontserratFonts/Montserrat-BoldItalic.ttf");
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: Montserrat-Regular;
+}
+
+/* first-section */
+section#header{
+    text-align: center;
+    color: #bbbbbb;
+    background-color: #4CAF50;
+    padding: 10px 20px;
+   font-size: 20px;
+   font-weight: 900;
+   font-family: Montserrat-Bold;
+
+}
+
+footer{
+    text-align: center;
+    color: #bbbbbb;
+    background-color: #47ef04;
+    padding: 20px 20px;
+   font-size: 15px;
+   font-weight: 900;
+   font-family: Montserrat-Bold;
+   margin-top: 30px;
+
+}
+
+
+/* second-section */
+section#invent-form{
+    padding-top: 60px;
+    font-family: Montserrat-Bold;
+
+}
+
+section#invent-form .invent{
+    padding: 20px;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    background-color: #bbbbbb;
+    padding-top: 50px; 
+    
+
+}
+
+h4{
+    padding: 0px !important;
+    margin: 0px !important;
+    color: #053c04;
+   
+    
+}
+
+section#invent-form .invent  input{
+    /* min-width: 300px !important; */
+    padding: 10px;
+    outline-color: #bbbbbb;
+    border:1px solid  #bbbbbb;
+    color:    #0a043c;;
+    font-family: Montserrat-BoldItalic;
+}
+
+section#invent-form .invent input ::placeholder{
+    color: #bbbbbb;
+}
+
+section#invent-form .invent > div{
+    margin-bottom: 20px;
+}
+
+.d-flex{
+    display: flex;
+    justify-content: space-around;
+} 
+.d-flex-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-center{
+    text-align: center;
+}
+
+button{
+    padding: 10px 30px;
+    background-color:#0a043c;
+    border: none;
+    color: #bbbbbb;
+    font-weight: bolder;
+}
+
+/* third-section table */
+section#invent-table .table{
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    padding: 20px;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    background-color: #0a043c;
+    color: #fff;
+    flex-direction: column; 
+}
+
+.btn, .clear{
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+
+}
+
+.clear, .print{
+    padding: 10px 20px;
+    font-size: 11px;
+    cursor: pointer;
+}
+.print{
+    background-color: #bbbbbb;
+    color: #0a043c;
+    cursor: pointer;
+}
+.font-weight-bold{
+    font-weight: 900;
+}
+
+#sales-chart {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+}
+
+#salesPieChart {
+    width: 100% !important;
+    max-width: 400px; /* You can adjust this based on your preference */
+    height: auto;
+    margin: 0 auto;
+}
+
+/* Table Styling */
+.table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+    font-family: Montserrat-Regular;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th {
+    background: #4CAF50; /* Green header background */
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Alternating row colors */
+tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+tr:hover {
+    background: #ddd;
+}
+
+/* Header Navigation */
+#header {
+    background: #0a043c;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-family: Montserrat-Bold;
+}
+
+nav {
+    background: #4CAF50;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Action Icons */
+.action-icons {
+    text-align: center;
+}
+
+.action-icons i {
+    margin: 0 5px;
+    cursor: pointer;
+    color: #0a043c;
+}
+
+.action-icons i:hover {
+    color: red;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pagination button {
+    background: #0a043c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background: #4CAF50;
+}
+

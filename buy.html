@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy Farm Equipment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4fdf8;
+      color: #333;
+    }
+
+    h1, h2 {
+      color: #2e7d32;
+    }
+
+    .filter-section {
+      background-color: #e8f5e9;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-section h5 {
+      margin-bottom: 15px;
+      color: #388e3c;
+    }
+
+    .card {
+      transition: transform 0.2s ease;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card-img-top {
+      height: 180px;
+      object-fit: cover;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .btn-primary {
+      background-color: #43a047;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #388e3c;
+    }
+
+    .btn-outline-secondary {
+      font-weight: 500;
+    }
+
+    #searchInput {
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .jumbotron {
+      background: linear-gradient(135deg, #43a047, #2e7d32);
+      color: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="text-center my-5">
+      <h1>Buy Farm Equipment</h1>
+      <p class="lead">Find, filter and purchase the best equipment with ease </p>
+    </header>
+
+    <!-- Sell Equipment Banner -->
+    <div class="jumbotron p-4 px-md-5 text-white rounded bg-success mb-5">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h2 class="display-5 font-weight-bold">Have Equipment to Sell?</h2>
+          <p class="lead">List your farm equipment in seconds and get the best price suggestion based on quality, horsepower, and condition.</p>
+        </div>
+        <div class="col-md-4 text-md-right text-center mt-3 mt-md-0">
+          <a href="sell.html" class="btn btn-light btn-lg font-weight-bold px-4 py-2">
+            🚜 Sell Now
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters and Search -->
+    <div class="row mb-5">
+      <div class="col-md-3">
+        <div class="filter-section">
+          <h5>Filters</h5>
+          <label>Price Range:</label>
+          <select class="form-control mb-2" id="priceFilter">
+            <option value="all">All</option>
+            <option value="0-50000">Below ₹50,000</option>
+            <option value="50000-200000">₹50,000 - ₹2,00,000</option>
+            <option value="200000-1000000">Above ₹2,00,000</option>
+          </select>
+
+          <label>Product Type:</label>
+          <select class="form-control mb-2" id="typeFilter">
+            <option value="all">All</option>
+            <option value="tractor">Tractor</option>
+            <option value="plough">Plough</option>
+            <option value="combine harvester">Combine Harvester</option>
+          </select>
+
+          <label>Brand:</label>
+          <select class="form-control mb-2" id="brandFilter">
+            <option value="all">All</option>
+            <option value="mahindra">Mahindra</option>
+            <option value="john deere">John Deere</option>
+            <option value="kubota">Kubota</option>
+          </select>
+
+          <label>Availability:</label>
+          <select class="form-control mb-2" id="stockFilter">
+            <option value="all">All</option>
+            <option value="in">In Stock</option>
+            <option value="out">Out of Stock</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <input type="text" id="searchInput" class="form-control mb-4" placeholder="🔍 Search for a product...">
+        <div class="row" id="productList">
+          <!-- Dynamic product cards go here -->
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+
+  <!-- Script -->
+  <script>
+    const products = [
+      {
+        name: "Mahindra Tractor",
+        type: "tractor",
+        price: 200000,
+        brand: "mahindra",
+        stock: "in",
+        image: "tractor.png"
+      },
+      {
+        name: "John Deere Combine Harvester",
+        type: "combine harvester",
+        price: 750000,
+        brand: "john deere",
+        stock: "out",
+        image: "combine-harvester.png"
+      },
+      {
+        name: "Kubota Plough",
+        type: "plough",
+        price: 50000,
+        brand: "kubota",
+        stock: "in",
+        image: "plough.png"
+      },
+      {
+        name: "Mahindra Tractor",
+        type: "tractor",
+        price: 200000,
+        brand: "mahindra",
+        stock: "in",
+        image: "tractor1.png"
+      },
+      {
+        name: "John Deere Tractor",
+        type: "tractor",
+        price: 450000,
+        brand: "john deere",
+        stock: "in",
+        image: "mini-tractor.png"
+      },
+      {
+        name: "Mahindra Combine Harvester",
+        type: "combine harvester",
+        price: 720000,
+        brand: "mahindra",
+        stock: "in",
+        image: "combine-mahindra.png"
+      },
+      {
+        name: "Kubota Mini Tractor",
+        type: "tractor",
+        price: 320000,
+        brand: "kubota",
+        stock: "out",
+        image: "mini-tractor1.png"
+      }
+    ];
+
+    const submittedItem = JSON.parse(localStorage.getItem("submittedItem"));
+    if (submittedItem) {
+      products.unshift({
+        name: submittedItem.name + " (Farmer Submitted)",
+        type: submittedItem.name.toLowerCase().includes("harvester")
+          ? "combine harvester"
+          : submittedItem.name.toLowerCase().includes("plough")
+          ? "plough"
+          : "tractor",
+        price: submittedItem.price,
+        brand: "Farmer",
+        stock: "in",
+        image: submittedItem.image
+      });
+    }
+
+    function renderProducts() {
+      const list = document.getElementById('productList');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const priceRange = document.getElementById('priceFilter').value;
+      const type = document.getElementById('typeFilter').value;
+      const brand = document.getElementById('brandFilter').value;
+      const stock = document.getElementById('stockFilter').value;
+
+      list.innerHTML = "";
+
+      products.forEach(p => {
+        const matchesSearch = p.name.toLowerCase().includes(search);
+        const matchesType = type === "all" || p.type === type;
+        const matchesBrand = brand === "all" || p.brand === brand;
+        const matchesStock = stock === "all" || p.stock === stock;
+        let matchesPrice = false;
+
+        if (priceRange === "all") matchesPrice = true;
+        else {
+          const [min, max] = priceRange.split("-").map(Number);
+          matchesPrice = p.price >= min && p.price <= max;
+        }
+
+        if (matchesSearch && matchesType && matchesBrand && matchesStock && matchesPrice) {
+          list.innerHTML += `
+            <div class="col-md-6 mb-4">
+              <div class="card">
+                <img src="${p.image}" class="card-img-top" alt="${p.name}">
+                <div class="card-body">
+                  <h5 class="card-title">${p.name}</h5>
+                  <p class="card-text">Price: ₹${p.price}</p>
+                  <p class="text-${p.stock === "in" ? "success" : "danger"} font-weight-bold">
+                    ${p.stock === "in" ? "✅ In Stock" : "❌ Out of Stock"}
+                  </p>
+                  ${
+                    p.stock === "in"
+                      ? `
+                        <button class="btn btn-primary btn-block mb-2" onclick="addToCart('${p.name}', ${p.price})">Buy Now</button>
+                        <a href="cart.html" class="btn btn-outline-secondary btn-block">Go to Cart</a>
+                      `
+                      : `<button class="btn btn-secondary btn-block" disabled>Out of Stock</button>`
+                  }
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      if (list.innerHTML === "") {
+        list.innerHTML = `<div class="col-12"><p>No matching products found.</p></div>`;
+      }
+    }
+
+    function addToCart(name, price) {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ name, price });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ Product added to cart!");
+    }
+
+    ['searchInput', 'priceFilter', 'typeFilter', 'brandFilter', 'stockFilter'].forEach(id => {
+      document.getElementById(id).addEventListener('input', renderProducts);
+      document.getElementById(id).addEventListener('change', renderProducts);
+    });
+
+    renderProducts();
+  </script>
+</body>
+</html>

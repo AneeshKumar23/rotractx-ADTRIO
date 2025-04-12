@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EMI Calculator</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f2f6ff;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 850px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+    }
+
+    .form-section {
+      flex: 1;
+    }
+
+    .chart-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #3b3b3b;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .slider-group {
+      margin-bottom: 25px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: #d0e0ff;
+      outline: none;
+      transition: background 0.3s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+    }
+
+    .value-display {
+      background: #e7f5ff;
+      color: #1d4ed8;
+      font-weight: 600;
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+
+    .results {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid #eee;
+    }
+
+    .results p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .results strong {
+      color: #111;
+    }
+
+    #emiChart {
+      max-width: 250px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-section">
+      <h2>EMI Calculator</h2>
+
+      <div class="slider-group">
+        <label>Loan Amount</label>
+        <input type="range" id="loanAmount" min="100000" max="5000000" step="10000" value="1000000" oninput="updateValues()">
+        <div class="value-display" id="loanAmountValue"></div>
+      </div>
+
+      <div class="slider-group">
+        <label>Rate of Interest (p.a)</label>
+        <input type="range" id="interestRate" min="1" max="15" step="0.1" value="6.5" oninput="updateValues()">
+        <div class="value-display" id="interestRateValue"></div>
+      </div>
+
+      <div class="slider-group">
+        <label>Loan Tenure</label>
+        <input type="range" id="loanTenure" min="1" max="30" value="5" oninput="updateValues()">
+        <div class="value-display" id="loanTenureValue"></div>
+      </div>
+
+      <div class="results">
+        <p><strong>Monthly EMI:</strong> ₹<span id="emi"></span></p>
+        <p><strong>Principal Amount:</strong> ₹<span id="principal"></span></p>
+        <p><strong>Total Interest:</strong> ₹<span id="interest"></span></p>
+        <p><strong>Total Amount:</strong> ₹<span id="totalAmount"></span></p>
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <canvas id="emiChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    let chart;
+
+    function calculateEMI(P, r, n) {
+      const monthlyRate = r / 12 / 100;
+      const emi = P * monthlyRate * Math.pow(1 + monthlyRate, n) / (Math.pow(1 + monthlyRate, n) - 1);
+      return emi;
+    }
+
+    function updateValues() {
+      const loanAmount = parseInt(document.getElementById('loanAmount').value);
+      const rate = parseFloat(document.getElementById('interestRate').value);
+      const tenureYears = parseInt(document.getElementById('loanTenure').value);
+
+      document.getElementById('loanAmountValue').innerText = `₹ ${loanAmount.toLocaleString()}`;
+      document.getElementById('interestRateValue').innerText = `${rate}%`;
+      document.getElementById('loanTenureValue').innerText = `${tenureYears} Yr`;
+
+      const tenureMonths = tenureYears * 12;
+      const emi = calculateEMI(loanAmount, rate, tenureMonths);
+      const totalPayment = emi * tenureMonths;
+      const interest = totalPayment - loanAmount;
+
+      document.getElementById('emi').innerText = Math.round(emi).toLocaleString();
+      document.getElementById('principal').innerText = loanAmount.toLocaleString();
+      document.getElementById('interest').innerText = Math.round(interest).toLocaleString();
+      document.getElementById('totalAmount').innerText = Math.round(totalPayment).toLocaleString();
+
+      updateChart(loanAmount, interest);
+    }
+
+    function updateChart(principal, interest) {
+      const ctx = document.getElementById('emiChart').getContext('2d');
+
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Principal', 'Interest'],
+          datasets: [{
+            data: [principal, interest],
+            backgroundColor: ['#e0e7ff', '#6366f1'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          cutout: '70%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#333',
+                font: {
+                  size: 14
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    window.onload = updateValues;
+  </script>
+</body>
+</html>

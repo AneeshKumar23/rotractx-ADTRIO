@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Portal</title>
+    <style>
+        /* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background-image: url('b1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px;
+    margin: 0;
+    color: #fff;
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    color: #ffffff;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    padding: 15px;
+    width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.card button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.card button:hover {
+    background-color: #27ae60;
+}
+
+/* Marquee */
+.marquee {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    margin: 30px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.marquee-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 15s linear infinite;
+    font-weight: 500;
+}
+
+@keyframes marquee {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+
+/* Weather Widget */
+#weather-widget {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    padding: 25px;
+    margin-top: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff;
+    text-align: center;
+}
+
+#weather-widget h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+#weather-widget button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+#weather-widget button:hover {
+    background-color: #2980b9;
+}
+
+.suggestion-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.suggestion-table th, .suggestion-table td {
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.3);
+    text-align: left;
+    color: #fff;
+}
+
+.suggestion-table th {
+    background-color: rgba(46, 204, 113, 0.8);
+}
+
+.suggestion-table tr:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    margin-top: 50px;
+    border-radius: 10px;
+    font-weight: 400;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>What are you using <b style="color: green;">FarmLife</b> for?</h1>
+    <div class="container">
+        <div class="card">
+            <a href="index.html"><img src="loan.webp" alt="Loan"></a>
+            <button onclick="location.href='index.html'">Loan Schemes</button>
+        </div>
+        <div class="card">
+            <a href="emi.html"><img src="emi.png" alt="Inventory Management"></a>
+            <button onclick="location.href='emi.html'">EMI calculator</button>
+        </div>
+        <div class="card">
+            <a href="digitalcalender.html"><img src="calender.avif" alt="Calender"></a>
+            <button onclick="location.href='digitalcalender.html'">Crop planting calender</button>
+        </div>
+        <div class="card">
+            <a href=""><img src="crop.png" alt="Crop Disease Identification"></a>
+            <button onclick="location.href='disease.html'">Crop Disease Identification</button>
+        </div>
+        <div class="card">
+            <a href="inventory.html"><img src="inventory.jpg" alt="Inventory Management"></a>
+            <button onclick="location.href='inventory.html'">Inventory Management</button>
+        </div>
+
+        <div class="card">
+            <a href="weather.html"><img src="weather.png" alt="Inventory Management"></a>
+            <button onclick="location.href='weather.html'">Live weather</button>
+        </div>
+        <div class="card">
+            <a href="w.html"><img src="vi.png" alt="Inventory Management"></a>
+            <button onclick="location.href='w.html'">Tutorial Videos/podcast for farming</button>
+        </div>
+
+        <div class="card">
+            <a href="buy.html"><img src="s.jpg" alt="Inventory Management"></a>
+            <button onclick="location.href='buy.html'">BUY/SELL</button>
+        </div>
+        <div class="card">
+            <a href="rent.html"><img src="re.jpg" alt="Inventory Management"></a>
+            <button onclick="location.href='rent.html'">Machine rent</button>
+        </div>
+        <div class="card">
+            <a href="lend.html"><img src="lend.jpg" alt="Inventory Management"></a>
+            <button onclick="location.href='lend.html'">Lend Machine</button>
+        </div>
+    </div>
+
+    <div class="marquee">
+        <div class="marquee-content" id="marquee-content">
+            Click the button below to get the latest weather information and crop suggestions!
+        </div>
+    </div>
+    
+    <div id="weather-widget">
+        <h2>Weather & Crop Suggestions</h2>
+        <hr>
+        <button onclick="getLocation()">Get Weather Info</button>
+        <h3 id="weather"></h3>
+        <p id="suggest"></p>
+        <table class="suggestion-table" id="crop-table" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Crop</th>
+                    <th>Soil Type</th>
+                </tr>
+            </thead>
+            <tbody id="crop-suggestions"></tbody>
+        </table>
+    </div>
+
+
+
+    <script>
+        async function suggestCrops(temp, humid) {
+            const cropData = {
+                "Apple": { "min_temp": 15, "max_temp": 24, "min_humid": 50, "max_humid": 80, "soil_type": "Well-drained loamy soil, sandy loam" },
+                "Banana": { "min_temp": 26, "max_temp": 30, "min_humid": 75, "max_humid": 85, "soil_type": "Well-drained, rich loamy soil with high organic matter" },
+                "Black gram": { "min_temp": 25, "max_temp": 35, "min_humid": 60, "max_humid": 80, "soil_type": "Well-drained loamy or clayey soil" },
+                "Chickpea": { "min_temp": 15, "max_temp": 30, "min_humid": 50, "max_humid": 50, "soil_type": "Well-drained sandy loam to clay loam" },
+                "Coconut": { "min_temp": 27, "max_temp": 32, "min_humid": 70, "max_humid": 70, "soil_type": "Well-drained sandy loam, coastal alluvial soil" },
+                "Coffee": { "min_temp": 18, "max_temp": 24, "min_humid": 70, "max_humid": 90, "soil_type": "Well-drained deep loamy soil, red or laterite soil" },
+                "Cotton": { "min_temp": 25, "max_temp": 35, "min_humid": 50, "max_humid": 70, "soil_type": "Well-drained black soil (Regur), sandy loam" },
+                "Grape": { "min_temp": 15, "max_temp": 30, "min_humid": 60, "max_humid": 80, "soil_type": "Well-drained deep sandy loam to clay loam" },
+                "Jute": { "min_temp": 24, "max_temp": 37, "min_humid": 70, "max_humid": 99, "soil_type": "Alluvial soil, sandy loam, clayey loam" },
+                "Rice": { "min_temp": 22, "max_temp": 32, "min_humid": 70, "max_humid": 96, "soil_type": "Clayey loam, alluvial soil with good water retention" },
+                "Watermelon": { "min_temp": 25, "max_temp": 30, "min_humid": 60, "max_humid": 80, "soil_type": "Well-drained sandy loam" }
+            };
+
+            let suitableCrops = [];
+            for (let crop in cropData) {
+                let conditions = cropData[crop];
+                if (temp >= conditions.min_temp && temp <= conditions.max_temp &&
+                    humid >= conditions.min_humid && humid <= conditions.max_humid) {
+                    suitableCrops.push({ name: crop, soil_type: conditions.soil_type });
+                }
+            }
+
+            let resultElement = document.getElementById("suggest");
+            let cropTable = document.getElementById("crop-table");
+            let cropSuggestions = document.getElementById("crop-suggestions");
+
+            cropSuggestions.innerHTML = ""; // Clear previous suggestions
+
+            if (suitableCrops.length > 0) {
+                resultElement.innerHTML = `<strong>Suitable Crops:</strong>`;
+                suitableCrops.forEach(crop => {
+                    let row = document.createElement("tr");
+                    row.innerHTML = `<td>${crop.name}</td><td>${crop.soil_type}</td>`;
+                    cropSuggestions.appendChild(row);
+                });
+                cropTable.style.display = "table"; // Show the table
+            } else {
+                resultElement.innerHTML = `<strong>No suitable crops found</strong>`;
+                cropTable.style.display = "none"; // Hide the table
+            }
+        }
+
+        const apikey = "134fe11d8ff2738729f8058d76c38277"; // Replace if needed
+
+        async function retrieveWeather(latitude, longitude) {
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}&units=metric`;
+            
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Weather Data:", data);
+                    const city = data.name; 
+                    const temp = data.main.temp; 
+                    const humidity = data.main.humidity; 
+                    const weatherCondition = data.weather[0].description;
+
+                    // Update marquee content
+                    document.getElementById("marquee-content").innerHTML = `
+                        Weather in <strong>${city}</strong>: ${weatherCondition}, 
+                        Temperature: <strong>${temp}°C</strong>, Humidity: <strong>${humidity}%</strong>. 
+                        Click the button below to get crop suggestions!`;
+
+                    // Call crop suggestion function
+                    suggestCrops(temp, humidity);
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        }
+
+        async function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        retrieveWeather(lat, lon);
+                    },
+                    function (error) {
+                        console.error("Error code: " + error.code + " - " + error.message);
+                    }
+                );
+            } else {
+                console.log("Geolocation is not supported by this browser.");
+            }
+        }
+    </script>
+
+<div class="footer">
+    <p>&copy; 2025 FarmLife. All rights reserved.</p>
+</div>
+
+</body>
+</html>

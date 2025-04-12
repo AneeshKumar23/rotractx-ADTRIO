@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Available Rentals</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+      }
+
+      header {
+        background-color: #2e7d32;
+        color: white;
+        text-align: center;
+        padding: 2rem 1rem;
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        padding: 3rem 2rem;
+        max-width: 1280px;
+        margin: auto;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.8); /* Soft glass-like */
+        backdrop-filter: blur(10px); /* Slight blur for glass effect */
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(229, 231, 235, 0.7); /* light border */
+      }
+
+      .card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .info {
+        font-size: 0.96rem;
+        color: #4b5563;
+        margin: 0.3rem 0;
+      }
+
+      .price {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 1rem 0 0.6rem;
+        color: #111827;
+      }
+
+      .btn {
+        margin-top: auto;
+        align-self: flex-start;
+        background-color: #4caf50;
+        color: white;
+        padding: 0.7rem 1.2rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #388e3c;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Available Products for Rent</header>
+
+    <div class="product-grid" id="productGrid">
+      <!-- Product cards will be rendered here -->
+    </div>
+
+    <script>
+      const container = document.getElementById("productGrid");
+
+      async function loadProducts() {
+        try {
+          const res = await fetch("http://localhost:3009/api/LendProduct/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const contentType = res.headers.get("content-type");
+          if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Response is not JSON");
+          }
+
+          const data = await res.json();
+          console.log("Fetched JSON Response:", data);
+
+          let products = [];
+
+          if (Array.isArray(data)) {
+            products = data;
+          } else if (data && Array.isArray(data.response)) {
+            products = data.response;
+          } else {
+            throw new Error("Unexpected response format");
+          }
+
+          if (products.length === 0) {
+            container.innerHTML =
+              "<p style='grid-column: 1/-1; text-align: center;'>No products found 🫤</p>";
+            return;
+          }
+
+          container.innerHTML = ""; // Clear existing content
+
+          products.forEach((item) => {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
+              <div class="card-content">
+                <h3>${item.name}</h3>
+                <p class="price">₹${item.price}/day</p>
+                <p class="info">📍 ${item.address}</p>
+                <p class="info">📅 Available: ${item.availableFrom?.slice(
+                  0,
+                  10
+                )} to ${item.availableTo?.slice(0, 10)}</p>
+                <a href="book.html?product=${encodeURIComponent(
+                  item.name
+                )}" class="btn">Book Now</a>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        } catch (error) {
+          console.error("Failed to load products:", error);
+          container.innerHTML =
+            "<p style='grid-column: 1/-1; text-align: center;'>Failed to load products 😢</p>";
+        }
+      }
+
+      loadProducts();
+    </script>
+  </body>
+</html>
