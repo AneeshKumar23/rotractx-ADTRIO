@@ -1,19 +1,44 @@
-# 🌾 FarmLife — Farm Equipment Rental & Booking Portal
+# 🌾 FarmLife — Farm Equipment Rental & Smart Farming Portal
 
-**FarmLife** is a web application built to simplify the process of renting and booking agricultural equipment. It helps farmers list products and others to rent them for specific timeframes, improving accessibility and resource sharing within the farming community.
-
----
-
-## 🚀 Features
-
-- 📦 **List a Product** – Add product listings including price, availability, and contact info.
-- 📅 **Book a Product** – Rent equipment by submitting a simple booking form.
-- 📃 **CRUD Operations** – Full backend support to Create, Read, Update, and Delete product listings.
-- 💬 **Responsive UI** – Clean and accessible frontend using HTML, CSS, and JavaScript.
-- 🔗 **RESTful API** – Built with Node.js and Express, using MongoDB for data persistence.
+**FarmLife** is a comprehensive web application built to empower farmers by providing digital tools for renting agricultural equipment, accessing loan eligibility, managing inventory, planning crops, and diagnosing crop and cattle diseases. It aims to make farming smarter, easier, and more efficient for all.
 
 ---
 
+## 🚀 Key Features
+
+### 📦 Equipment Rental & Booking
+- Add product listings including availability, price, and contact details.
+- Rent any equipment by submitting a simple booking form.
+- Full backend support for Create, Read, Update, and Delete product listings.
+
+### 🏦 Loan Eligibility Checker
+- A dedicated page where farmers can input their details to discover loans they are eligible for.
+- Smart filters based on landholding, income, and purpose of the loan.
+
+### 📊 Inventory Management
+- Maintain a list of farming equipment and tools owned.
+- Track usage and status of each item.
+- Helps avoid rental dependency if equipment is available internally.
+
+### 🗓 Crop Calendar
+- Plan sowing, irrigation, and harvesting schedules based on regional data.
+- Receive reminders and optimized dates according to the selected district.
+
+### 🧪 District-Based Soil Classification
+- Select your district to view its soil type and properties.
+- Get personalized crop suggestions based on soil suitability.
+
+### 🌱 Crop Recommendation Engine
+- Based on soil type, climate, and season — the system recommends crops that are optimal for the region.
+
+### 🐛 Crop Disease Classification
+- Upload images or provide symptoms to detect diseases using classification models.
+- Get remedies, pesticide suggestions, and prevention tips.
+
+### 🐄 Cattle Disease Diagnosis
+- Submit cattle health symptoms to get possible diseases and treatment guidance.
+- Supports common livestock like cows, goats, buffaloes, etc.
+---
 ## 🧠 Tech Stack
 
 ### 🔧 Backend
